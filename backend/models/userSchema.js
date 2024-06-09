@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
         required:[true,"Please provide password"],
         minLength:[3,"Password MUST CONTAIN ATLEAST 8 CHARACTER"],
         maxLength:[30,"Password MUST NOT EXCEED 32 characters"],
+        select : false
     },
     confirmPassword:{
         type:String,
@@ -60,7 +61,7 @@ userSchema.methods.comparePassword=async function(enteredPassword){
 };
 //GENERATING A JWT TOKEN FOR AUTHORIZATION
 
-userSchema.methods.getJETTOKEN=function (){
+userSchema.methods.getJWTToken=function (){
     return jwt.sign({id:this._id},process.env.JWT_SECRET_KEY,{
         expiresIn:process.env.JWT_EXPIRE,
     })
