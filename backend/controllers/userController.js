@@ -20,7 +20,7 @@ export const register = catchAsyncError(async(req,res,next)=>{
         password,
         confirmPassword
     });
-    sendToken(user,200,res,"USER REGISTERED SUCCESSFULLY");
+    sendToken(user,201,res,"USER REGISTERED SUCCESSFULLY");
 });
 
 export const login = catchAsyncError(async(req,res,next)=>{
@@ -39,7 +39,7 @@ export const login = catchAsyncError(async(req,res,next)=>{
     if(user.role!==role){
         return next(new ErrorHandler('USER WITH ROLE NOT FOUND',400));
     }
-    sendToken(user,200,res,"USER LOGIN SUCCESSFULLY");
+    sendToken(user,201,res,"USER LOGIN SUCCESSFULLY!");
 });
 
 export const logout = catchAsyncError(async(req,res,next)=>{
@@ -50,5 +50,13 @@ export const logout = catchAsyncError(async(req,res,next)=>{
     .json({
         success:true,
         message:"USER LOGGED OUT SUCCESSFULLY!!",
+    });
+});
+
+export const getUser = catchAsyncError((req,res,next)=>{
+    const user = req.user;
+    res.status(200).json({
+        success:true,
+        user,
     });
 });

@@ -67,4 +67,4 @@ userSchema.methods.getJWTToken=function (){
     })
 };
 
-export const User = mongoose.model("USER",userSchema);
+export const User = mongoose.model("User",userSchema);
