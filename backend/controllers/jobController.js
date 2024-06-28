@@ -15,8 +15,8 @@ export const getAllJobs = catchAsyncError(async(req,res,next)=>{
 
 export const postJob = catchAsyncError(async(req,res,next)=>{
     const {role}=req.user;
-    if(role!=="EMPLOYEER"){
-        return next(new ErrorHandler("ONLY EMPLOYEER ARE ALLOWED TO POST JOBS!",400));
+    if(role!=="EMPLOYER"){
+        return next(new ErrorHandler("ONLY EMPLOYER ARE ALLOWED TO POST JOBS!",400));
     }
     const {title,description,category,country,location,fixedSalary,salaryFrom,salaryTo,expired,jobPostedOn}=req.body;
     if(!title||!description||!category||!country||!location){
@@ -51,8 +51,8 @@ export const postJob = catchAsyncError(async(req,res,next)=>{
 
 export const getMyJobs= catchAsyncError(async(req,res,next)=>{
     const {role}=req.user;
-    if(role!=="EMPLOYEER"){
-        return next(new ErrorHandler("ONLY EMPLOYEER CAN ACCESS RESOURCES",400));
+    if(role!=="EMPLOYER"){
+        return next(new ErrorHandler("ONLY EMPLOYER CAN ACCESS RESOURCES",400));
     }
     const jobPostedBy=req.user._id;
     const myJobs = await Job.find({jobPostedBy:jobPostedBy});
@@ -65,8 +65,8 @@ export const getMyJobs= catchAsyncError(async(req,res,next)=>{
 
 export const updateJob = catchAsyncError(async(req,res,next)=>{
     const {role}=req.user;
-    if(role!=="EMPLOYEER"){
-        return next(new ErrorHandler("ONLY EMPLOYEER CAN ACCESS RESOURCES",400));
+    if(role!=="EMPLOYER"){
+        return next(new ErrorHandler("ONLY EMPLOYER CAN ACCESS RESOURCES",400));
     }
     const {jobId}=req.params;
     // console.log(jobId);
@@ -88,8 +88,8 @@ export const updateJob = catchAsyncError(async(req,res,next)=>{
 
 export const deleteJob = catchAsyncError(async(req,res,next)=>{
     const {role}=req.user;
-    if(role!=="EMPLOYEER"){
-        return next(new ErrorHandler("ONLY EMPLOYEER CAN ACCESS RESOURCES",400));
+    if(role!=="EMPLOYER"){
+        return next(new ErrorHandler("ONLY EMPLOYER CAN ACCESS RESOURCES",400));
     }
     const {jobId}=req.params;
     let job  = await Job.findById(jobId);

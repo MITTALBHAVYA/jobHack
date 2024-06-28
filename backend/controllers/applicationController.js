@@ -7,7 +7,7 @@ import cloudinary from "cloudinary";
 export const empGetAllApplications = catchAsyncError(async(req,res,next)=>{
     const {role}=req.user;
     if(role === "JOB SEEKER"){
-        return next(new ErrorHandler("ONLY EMPLOYEER CAN ACCESS RESOURCES",400));
+        return next(new ErrorHandler("ONLY EMPLOYER CAN ACCESS RESOURCES",400));
     }
     const {_id} = req.user;
     const applications = await Application.find({"employeeId.user":_id});
@@ -19,7 +19,7 @@ export const empGetAllApplications = catchAsyncError(async(req,res,next)=>{
 
 export const jobGetAllApplications = catchAsyncError(async(req,res,next)=>{
     const {role}=req.user;
-    if(role === "EMPLOYEER"){
+    if(role === "EMPLOYER"){
         return next(new ErrorHandler("ONLY JOB SEEKER CAN ACCESS RESOURCES",400));
     }
     const {_id} = req.user;
@@ -32,7 +32,7 @@ export const jobGetAllApplications = catchAsyncError(async(req,res,next)=>{
 
 export const jobDeleteApplication = catchAsyncError(async(req,res,next)=>{
     const {role}=req.user;
-    if(role === "EMPLOYEER"){
+    if(role === "EMPLOYER"){
         return next(new ErrorHandler("ONLY JOB SEEKER CAN ACCESS RESOURCES",400));
     }
     const {id} = req.params;
@@ -49,7 +49,7 @@ export const jobDeleteApplication = catchAsyncError(async(req,res,next)=>{
 
 export const postApplication = catchAsyncError(async(req,res,next)=>{
     const {role}=req.user;
-    if(role === "EMPLOYEER"){
+    if(role === "EMPLOYER"){
         return next(new ErrorHandler("ONLY JOB SEEKER CAN ACCESS RESOURCES",400));
     }
     if(!req.files || Object.keys(req.files).length === 0){
@@ -80,7 +80,7 @@ export const postApplication = catchAsyncError(async(req,res,next)=>{
     }
     const employerId = {
         user:jobDetails.postedBy,
-        role:"EMPLOYEER"
+        role:"EMPLOYER"
     };
     if(!name || !email || !coverLetter || !phone || !address || !applicantId || !employerId || !resume){
         return next(new ErrorHandler("PLEASE FILL ALL FIELDS",400));
