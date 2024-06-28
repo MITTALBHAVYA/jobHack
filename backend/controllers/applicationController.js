@@ -10,7 +10,7 @@ export const empGetAllApplications = catchAsyncError(async(req,res,next)=>{
         return next(new ErrorHandler("ONLY EMPLOYER CAN ACCESS RESOURCES",400));
     }
     const {_id} = req.user;
-    const applications = await Application.find({"employeeId.user":_id});
+    const applications = await Application.find({"employerId.user":_id});
     res.status(200).json({
         success:true,
         applications,
@@ -79,7 +79,7 @@ export const postApplication = catchAsyncError(async(req,res,next)=>{
         return next(new ErrorHandler("JOB NOT FOUND!",404));
     }
     const employerId = {
-        user:jobDetails.postedBy,
+        user:jobDetails.jobPostedBy,
         role:"EMPLOYER"
     };
     if(!name || !email || !coverLetter || !phone || !address || !applicantId || !employerId || !resume){
