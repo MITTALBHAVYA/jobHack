@@ -1,6 +1,6 @@
 import './App.css';
 import { Context } from './main';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useContext, useEffect } from 'react';
 import axios from 'axios';
@@ -31,22 +31,22 @@ function App() {
       }
     };
     fetchUser();
-  }, [isAuthorized]);
+  }, [isAuthorized, setIsAuthorized, setUser]);
 
   return (
     <>
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/job/getAll" element={<Jobs />} />
-          <Route path="/job/:jobId" element={<JobDetails />} />
-          <Route path="/job/post" element={<PostJobs />} />
-          <Route path="/job/getMyJobs" element={<MyJobs />} />
-          <Route path="/application/:id" element={<Application />} />
-          <Route path="/applications/me" element={<MyApplication />} />
+          <Route path="/login" element={isAuthorized ? <Navigate to="/" /> : <Login />} />
+          <Route path="/register" element={isAuthorized ? <Navigate to="/" /> : <Register />} />
+          <Route path="/" element={isAuthorized ? <Home /> : <Navigate to="/login" />} />
+          <Route path="/job/getAll" element={isAuthorized ? <Jobs /> : <Navigate to="/login" />} />
+          <Route path="/job/:jobId" element={isAuthorized ? <JobDetails /> : <Navigate to="/login" />} />
+          <Route path="/job/post" element={isAuthorized ? <PostJobs /> : <Navigate to="/login" />} />
+          <Route path="/job/getMyJobs" element={isAuthorized ? <MyJobs /> : <Navigate to="/login" />} />
+          <Route path="/application/:id" element={isAuthorized ? <Application /> : <Navigate to="/login" />} />
+          <Route path="/applications/me" element={isAuthorized ? <MyApplication /> : <Navigate to="/login" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
