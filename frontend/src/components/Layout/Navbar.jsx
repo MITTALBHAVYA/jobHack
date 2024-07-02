@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import {GiHamburgerMenu} from 'react-icons/gi';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { BASE_URL } from '../../../helper.js';
 
 
 const Navbar = () => {
@@ -13,7 +14,7 @@ const Navbar = () => {
   const navigateTo=useNavigate();
   const handleLogout = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/v1/user/logout",{withCredentials:true});
+      const response = await axios.get(`${BASE_URL}/api/v1/user/logout`,{withCredentials:true});
       toast.success(response.data.message);
       setIsAuthorized(false);
       navigateTo("/login");

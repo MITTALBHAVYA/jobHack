@@ -6,6 +6,7 @@ import axios from "axios";
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { RiLock2Fill} from "react-icons/ri";
+import { BASE_URL } from "../../../helper.js";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/api/v1/user/login",
+        `${BASE_URL}/api/v1/user/login`,
         {
           email:email,
           role:role,

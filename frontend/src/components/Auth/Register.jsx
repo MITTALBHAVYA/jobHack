@@ -8,7 +8,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { RiLock2Fill, RiLock2Line } from "react-icons/ri";
 import { FaPencilAlt } from "react-icons/fa";
 import { FaPhoneFlip } from "react-icons/fa6";
-
+import { BASE_URL } from "../../../helper.js";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -23,7 +23,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/api/v1/user/register",
+        `${BASE_URL}/api/v1/user/register`,
         {
           userName:name,
           phone:phone,

@@ -5,6 +5,7 @@ import { FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 import { Context } from "../../main";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../../helper.js";
 
 const MyJobs = () => {
   const [myJobs, setMyJobs] = useState([]);
@@ -16,7 +17,7 @@ const MyJobs = () => {
     const fetchJobs = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:3000/api/v1/job/getMyJobs",
+          `${BASE_URL}/api/v1/job/getMyJobs`,
           { withCredentials: true }
         );
         setMyJobs(data.myJobs);
@@ -42,7 +43,7 @@ const MyJobs = () => {
     const updatedJob = myJobs.find((job) => job._id === jobId);
     try {
       const { data } = await axios.put(
-        `http://localhost:3000/api/v1/job/update/${jobId}`,
+        `${BASE_URL}/api/v1/job/update/${jobId}`,
         updatedJob,
         { withCredentials: true }
       );
@@ -56,7 +57,7 @@ const MyJobs = () => {
   const handleDeleteJob = async (jobId) => {
     try {
       const { data } = await axios.delete(
-        `http://localhost:3000/api/v1/job/delete/${jobId}`,
+        `${BASE_URL}/api/v1/job/delete/${jobId}`,
         { withCredentials: true }
       );
       toast.success(data.message);

@@ -3,6 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../main";
+import { BASE_URL } from "../../../helper.js";
 
 const PostJob = () => {
   const [jobData, setJobData] = useState({
@@ -32,7 +33,7 @@ const PostJob = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/api/v1/job/post",
+        `${BASE_URL}/api/v1/job/post`,
         postData,
         {
           withCredentials: true,

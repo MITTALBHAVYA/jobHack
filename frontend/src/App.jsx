@@ -16,14 +16,14 @@ import PostJobs from './components/Job/PostJobs';
 import Application from './components/Application/Application';
 import MyApplication from './components/Application/MyApplication';
 import NotFound from './components/NotFound/NotFound';
-
+import  {BASE_URL } from '../helper.js';
 function App() {
   const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/v1/user/getUser", { withCredentials: true });
+        const response = await axios.get(`${BASE_URL}/api/v1/user/getUser`, { withCredentials: true });
         setUser(response.data.user);
         setIsAuthorized(true);
       } catch (error) {

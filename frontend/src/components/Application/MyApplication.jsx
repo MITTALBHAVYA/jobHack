@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import ResumeModal from "./ResumeModal";
+import { BASE_URL } from "../../../helper.js";
 
 const MyApplications = () => {
   const { user, isAuthorized } = useContext(Context);
@@ -20,7 +21,7 @@ const MyApplications = () => {
           ? "employer/getAll"
           : "jobseeker/getAll";
         
-        const { data } = await axios.get(`http://localhost:3000/api/v1/application/${endpoint}`, {
+        const { data } = await axios.get(`${BASE_URL}/api/v1/application/${endpoint}`, {
           withCredentials: true,
         }
       );
@@ -45,7 +46,7 @@ const MyApplications = () => {
   
   const deleteApplication = async (id) => {
     try {
-      const { data } = await axios.delete(`http://localhost:3000/api/v1/application/delete/${id}`, {
+      const { data } = await axios.delete(`${BASE_URL}/api/v1/application/delete/${id}`, {
         withCredentials: true,
       });
 

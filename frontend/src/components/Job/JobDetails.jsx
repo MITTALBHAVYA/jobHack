@@ -2,7 +2,7 @@ import {useContext,useEffect,useState} from 'react';
 import axios from 'axios';
 import {Link,useParams,useNavigate} from 'react-router-dom';
 import {Context} from '../../main';
-
+import {BASE_URL} from '../../../helper.js';
 const JobDetails = () => {
   const {jobId}=useParams();
   const [job,setJob]=useState({});
@@ -17,7 +17,7 @@ const JobDetails = () => {
     }
     const fetchJobDetails = async ()=>{
       try{
-        const {data}=await axios.get(`http://localhost:3000/api/v1/job/${jobId}`,{withCredentials:true});
+        const {data}=await axios.get(`${BASE_URL}/api/v1/job/${jobId}`,{withCredentials:true});
         setJob(data.job);
       }
       catch(err){
