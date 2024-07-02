@@ -13,7 +13,7 @@ const app = express();
 dotenv.config({ path: './config/config.env' });
 
 app.use(cors({
-    origin: [process.env.FRONTEND_URL],
+    origin: ["https://jobhack1729.netlify.app"],
     methods: ['GET', 'POST', 'DELETE', 'PUT'],
     credentials: true,
 })
