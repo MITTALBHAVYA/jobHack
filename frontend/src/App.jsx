@@ -44,9 +44,9 @@ function App() {
           <Route path="/job/getAll" element={isAuthorized ? <Jobs /> : <Navigate to="/login" />} />
           <Route path="/job/:jobId" element={isAuthorized ? <JobDetails /> : <Navigate to="/login" />} />
           <Route path="/job/post" element={isAuthorized ? <PostJobs /> : <Navigate to="/login" />} />
-          <Route path="/job/getMyJobs" element={isAuthorized ? <MyJobs /> : <Navigate to="/login" />} />
+          <Route path="/job/me" element={isAuthorized ? <MyJobs /> : <Navigate to="/login" />} />
           <Route path="/application/:id" element={isAuthorized ? <Application /> : <Navigate to="/login" />} />
-          <Route path="/applications/me" element={isAuthorized ? <MyApplication /> : <Navigate to="/login" />} />
+          <Route path="/application/me" element={isAuthorized ? <MyApplication /> : <Navigate to="/login" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
