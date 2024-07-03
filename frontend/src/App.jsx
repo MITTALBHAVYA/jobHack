@@ -16,7 +16,8 @@ import PostJobs from './components/Job/PostJobs';
 import Application from './components/Application/Application';
 import MyApplication from './components/Application/MyApplication';
 import NotFound from './components/NotFound/NotFound';
-import  {BASE_URL } from '../helper.js';
+import { BASE_URL } from '../helper.js';
+
 function App() {
   const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
 
@@ -31,7 +32,7 @@ function App() {
       }
     };
     fetchUser();
-  }, [isAuthorized, setIsAuthorized, setUser]);
+  }, [setIsAuthorized, setUser]);
 
   return (
     <>

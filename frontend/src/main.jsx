@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
+import Cookies from 'js-cookie';
 
 export const Context = createContext({});
 
@@ -9,18 +10,23 @@ const AppWrapper = () => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const storedIsAuthorized = localStorage.getItem('isAuthorized') === 'true';
-    const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+    const storedToken = Cookies.get('token');
+    const storedUser = Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {};
 
-    if (storedIsAuthorized) {
-      setIsAuthorized(storedIsAuthorized);
+    if (storedToken) {
+      setIsAuthorized(true);
       setUser(storedUser);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('isAuthorized', isAuthorized);
-    localStorage.setItem('user', user?JSON.stringify(user):{});
+    if (isAuthorized) {
+      Cookies.set('token', 'your-token', { expires: 7 });
+      Cookies.set('user', JSON.stringify(user), { expires: 7 });
+    } else {
+      Cookies.remove('token');
+      Cookies.remove('user');
+    }
   }, [isAuthorized, user]);
 
   return (
@@ -33,6 +39,5 @@ const AppWrapper = () => {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AppWrapper />
-    {/* <App /> */}
   </React.StrictMode>
 );
