@@ -8,7 +8,6 @@ const AppWrapper = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [user, setUser] = useState({});
 
-  // Load state from localStorage on initial load
   useEffect(() => {
     const storedIsAuthorized = localStorage.getItem('isAuthorized') === 'true';
     const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
@@ -19,10 +18,9 @@ const AppWrapper = () => {
     }
   }, []);
 
-  // Save state to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('isAuthorized', isAuthorized);
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', user?JSON.stringify(user):{});
   }, [isAuthorized, user]);
 
   return (
@@ -35,5 +33,6 @@ const AppWrapper = () => {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AppWrapper />
+    {/* <App /> */}
   </React.StrictMode>
 );
