@@ -13,6 +13,9 @@ const AppWrapper = () => {
     const storedToken = Cookies.get('token');
     const storedUser = Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {};
 
+    console.log('Retrieved token from cookies:', storedToken);
+    console.log('Retrieved user from cookies:', storedUser);
+
     if (storedToken) {
       setIsAuthorized(true);
       setUser(storedUser);
