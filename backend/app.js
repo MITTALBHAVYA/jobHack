@@ -12,12 +12,7 @@ import { errorMiddleware } from "./middlewares/error.js";
 const app = express();
 dotenv.config({ path: './config/config.env' });
 
-app.use(cors({
-    origin: ["https://jobhack108.netlify.app","http://localhost:5173","https://main--jobhack108.netlify.app/login"],
-    methods: ['GET', 'POST', 'DELETE', 'PUT'],
-    credentials: true,
-})
-);
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
