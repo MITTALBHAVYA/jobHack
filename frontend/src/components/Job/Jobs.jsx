@@ -3,9 +3,11 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../main";
 import { BASE_URL } from "../../../helper.js";
+
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { isAuthorized } = useContext(Context);
   const navigateTo = useNavigate();
 
@@ -20,7 +22,7 @@ const Jobs = () => {
           });
           setJobs(data.jobs);
         } catch (error) {
-          console.log(error);
+          setError(error.response?.data?.message || error.message);
         } finally {
           setLoading(false);
         }
@@ -31,6 +33,10 @@ const Jobs = () => {
 
   if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (

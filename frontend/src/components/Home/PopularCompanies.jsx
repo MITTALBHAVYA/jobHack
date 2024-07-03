@@ -6,25 +6,29 @@ const PopularCompanies = () => {
     {
       id: 1,
       title: "Microsoft",
-      location: "Street 10 Karachi, Pakistan",
+      location: "Street 10, Karachi, Pakistan",
       openPositions: 10,
-      icon: <FaMicrosoft />,
+      icon: <FaMicrosoft aria-label="Microsoft" />,
     },
     {
       id: 2,
       title: "Tesla",
-      location: "Street 10 Karachi, Pakistan",
+      location: "Street 10, Karachi, Pakistan",
       openPositions: 5,
-      icon: <SiTesla />,
+      icon: <SiTesla aria-label="Tesla" />,
     },
     {
       id: 3,
       title: "Apple",
-      location: "Street 10 Karachi, Pakistan",
+      location: "Street 10, Karachi, Pakistan",
       openPositions: 20,
-      icon: <FaApple />,
+      icon: <FaApple aria-label="Apple" />,
     },
   ];
+
+  const handleOpenPositions = (company) => {
+    console.log(`View open positions for ${company.title}`);
+  };
 
   return (
     <div className="companies">
@@ -40,7 +44,9 @@ const PopularCompanies = () => {
                   <p>{location}</p>
                 </div>
               </div>
-              <button>Open Positions {openPositions}</button>
+              <button onClick={() => handleOpenPositions({ id, title })}>
+                Open Positions {openPositions}
+              </button>
             </div>
           ))}
         </div>

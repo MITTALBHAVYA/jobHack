@@ -19,7 +19,7 @@ const PostJob = () => {
   });
 
   const { isAuthorized, user } = useContext(Context);
-  const navigateTo = useNavigate();
+  const navigate = useNavigate();
 
   const handleJobPost = async (e) => {
     e.preventDefault();
@@ -41,18 +41,28 @@ const PostJob = () => {
         }
       );
       toast.success(data.message);
+      setJobData({
+        title: "",
+        description: "",
+        category: "",
+        country: "",
+        location: "",
+        salaryFrom: "",
+        salaryTo: "",
+        fixedSalary: "",
+        salaryType: "default",
+      });
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Failed to post job");
     }
   };
 
   if (!isAuthorized || (user && user.role !== "EMPLOYER")) {
-    navigateTo("/login");
+    navigate("/login");
     return null;
   }
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = ({ target: { name, value } }) => {
     setJobData((prevJobData) => ({ ...prevJobData, [name]: value }));
   };
 

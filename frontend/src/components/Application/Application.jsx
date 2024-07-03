@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../main";
 import { BASE_URL } from "../../../helper.js";
+
 const Application = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -11,20 +12,34 @@ const Application = () => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [resume, setResume] = useState(null);
-
   const { isAuthorized, user } = useContext(Context);
-
   const navigateTo = useNavigate();
+  const { id } = useParams();
 
   // Function to handle file input changes
   const handleFileChange = (event) => {
-    const resume = event.target.files[0];
-    setResume(resume);
+    const file = event.target.files[0];
+    if (file) {
+      // Ensure file type restriction
+      const fileType = file.type.split("/")[1];
+      if (fileType !== "pdf" && fileType !== "jpeg" && fileType !== "png") {
+        toast.error("Invalid file format. Please upload a PDF, JPEG, or PNG file.");
+        event.target.value = null;
+      } else {
+        setResume(file);
+      }
+    }
   };
 
-  const { id } = useParams();
   const handleApplication = async (e) => {
     e.preventDefault();
+
+    // Form validation
+    if (!name || !email || !phone || !address || !coverLetter || !resume) {
+      toast.error("Please fill in all fields and upload a resume.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
@@ -35,31 +50,30 @@ const Application = () => {
     formData.append("jobId", id);
 
     try {
-      const { data } = await axios.post(
-        `${BASE_URL}/api/v1/application/post`,
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const { data } = await axios.post(`${BASE_URL}/api/v1/application/post`, formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      toast.success(data.message);
+      // Reset form fields after successful submission
       setName("");
       setEmail("");
       setCoverLetter("");
       setPhone("");
       setAddress("");
-      setResume("");
-      toast.success(data.message);
+      setResume(null);
       navigateTo("/job/getAll");
     } catch (error) {
       toast.error(error.response.data.message);
     }
   };
 
+  // Redirect if not authorized or user is an employer
   if (!isAuthorized || (user && user.role === "EMPLOYER")) {
     navigateTo("/");
+    return null;
   }
 
   return (
@@ -72,41 +86,42 @@ const Application = () => {
             placeholder="Your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
           <input
             type="email"
             placeholder="Your Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <input
-            type="number"
+            type="tel"
             placeholder="Your Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            required
           />
           <input
             type="text"
             placeholder="Your Address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            required
           />
           <textarea
-            placeholder="CoverLetter..."
+            placeholder="Cover Letter..."
             value={coverLetter}
             onChange={(e) => setCoverLetter(e.target.value)}
+            required
           />
           <div>
-            <label
-              style={{ textAlign: "start", display: "block", fontSize: "20px" }}
-            >
-              Select Resume
-            </label>
+            <label>Select Resume:</label>
             <input
               type="file"
-              accept=".pdf, .jpg, .png"
+              accept=".pdf, .jpeg, .png"
               onChange={handleFileChange}
-              style={{ width: "100%" }}
+              required
             />
           </div>
           <button type="submit">Send Application</button>

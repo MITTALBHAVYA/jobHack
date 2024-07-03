@@ -9,33 +9,27 @@ const InfoSection = () => {
         <h3>How JobZee Works</h3>
         <div className="banner">
           <div className="card">
-            <FaUserPlus />
+            <FaUserPlus aria-label="Create Account" />
             <p>Create Account</p>
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero
-              molestiae in inventore, commodi quo, tempore nam cumque totam velit
-              ipsa excepturi, omnis eum officia. Laudantium numquam alias aliquam
-              illum quod.
+              Sign up and create your account to start exploring job
+              opportunities or posting jobs.
             </p>
           </div>
           <div className="card">
-            <MdFindInPage />
+            <MdFindInPage aria-label="Find a Job/Post a Job" />
             <p>Find a Job/Post a Job</p>
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero
-              molestiae in inventore, commodi quo, tempore nam cumque totam velit
-              ipsa excepturi, omnis eum officia. Laudantium numquam alias aliquam
-              illum quod.
+              Browse through job listings or post job opportunities tailored to
+              your needs.
             </p>
           </div>
           <div className="card">
-            <IoMdSend />
+            <IoMdSend aria-label="Apply For Job/Recruit Suitable Candidates" />
             <p>Apply For Job/Recruit Suitable Candidates</p>
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero
-              molestiae in inventore, commodi quo, tempore nam cumque totam velit
-              ipsa excepturi, omnis eum officia. Laudantium numquam alias aliquam
-              illum quod.
+              Apply for jobs matching your skills or recruit suitable candidates
+              for your job openings.
             </p>
           </div>
         </div>

@@ -1,61 +1,77 @@
-import {useContext,useEffect,useState} from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import {Link,useParams,useNavigate} from 'react-router-dom';
-import {Context} from '../../main';
-import {BASE_URL} from '../../../helper.js';
-const JobDetails = () => {
-  const {jobId}=useParams();
-  const [job,setJob]=useState({});
-  const [loading,setLoading]=useState(true);
-  const [error,setError]=useState(null);
-  const navigateTo=useNavigate();
-  const {isAuthorized,user}=useContext(Context);
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Context } from '../../main';
+import { BASE_URL } from '../../../helper.js';
 
-  useEffect(()=>{
-    if(!isAuthorized){
+const JobDetails = () => {
+  const { jobId } = useParams();
+  const [job, setJob] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigateTo = useNavigate();
+  const { isAuthorized, user } = useContext(Context);
+
+  useEffect(() => {
+    if (!isAuthorized) {
       navigateTo("/login");
+      return;
     }
-    const fetchJobDetails = async ()=>{
-      try{
-        const {data}=await axios.get(`${BASE_URL}/api/v1/job/${jobId}`,{withCredentials:true});
+
+    const fetchJobDetails = async () => {
+      try {
+        const { data } = await axios.get(`${BASE_URL}/api/v1/job/${jobId}`, { withCredentials: true });
         setJob(data.job);
-      }
-      catch(err){
+      } catch (err) {
         setError(err.response?.data?.message || err.message);
         navigateTo("/notfound");
-      }
-      finally{
+      } finally {
         setLoading(false);
       }
     };
     fetchJobDetails();
-  },[jobId,isAuthorized,navigateTo]);
+  }, [jobId, isAuthorized, navigateTo]);
 
-  if(loading){
+  if (loading) {
     return <div>Loading...</div>;
   }
 
-  if(error){
+  if (error) {
     return <div>{error}</div>;
   }
+
+  const {
+    title,
+    category,
+    country,
+    location,
+    description,
+    jobPostedOn,
+    fixedSalary,
+    salaryFrom,
+    salaryTo,
+    _id,
+  } = job;
 
   return (
     <section className="jobDetails page">
       <div className="container">
         <h3>Job Details</h3>
         <div className="banner">
-          <p>Title: <span>{job.title}</span></p>
-          <p>Category: <span>{job.category}</span> </p>
-          <p>Country: <span>{job.country}</span></p>
-          <p>Location: <span>{job.location}</span></p>
-          <p>Description: <span>{job.description}</span></p>
-          <p>Job Posted On: <span>{job.jobPostedOn}</span></p>
-          <p>Salary: {job.fixedSalary?<span>{job.fixedSalary}</span> : <span>{job.salaryFrom} - {job.salaryTo}</span>}</p>
-          {user && user.role !== "Employer" && (<Link to={`/application/${job._id}`}>Apply Now</Link>)}
+          <p>Title: <span>{title}</span></p>
+          <p>Category: <span>{category}</span></p>
+          <p>Country: <span>{country}</span></p>
+          <p>Location: <span>{location}</span></p>
+          <p>Description: <span>{description}</span></p>
+          <p>Job Posted On: <span>{jobPostedOn}</span></p>
+          <p>Salary: {fixedSalary ? <span>{fixedSalary}</span> : <span>{salaryFrom} - {salaryTo}</span>}</p>
+          {user && user.role !== "Employer" && (
+            <Link to={`/application/${_id}`}>Apply Now</Link>
+          )}
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
 export default JobDetails;

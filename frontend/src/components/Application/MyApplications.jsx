@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { Context } from "../../main";
+import { Context } from "../../main.jsx";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import ResumeModal from "./ResumeModal";
+import ResumeModal from "./ResumeModal.jsx";
 import { BASE_URL } from "../../../helper.js";
 
 const MyApplications = () => {

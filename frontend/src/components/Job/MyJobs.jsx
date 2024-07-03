@@ -14,25 +14,22 @@ const MyJobs = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isAuthorized || (user && user.role !== "EMPLOYER")) {
+      navigate("/");
+      return;
+    }
     const fetchJobs = async () => {
       try {
-        const { data } = await axios.get(
-          `${BASE_URL}/api/v1/job/getMyJobs`,
-          { withCredentials: true }
-        );
+        const { data } = await axios.get(`${BASE_URL}/api/v1/job/getMyJobs`, {
+          withCredentials: true,
+        });
         setMyJobs(data.myJobs);
       } catch (error) {
-        toast.error(error.response.data.message);
+        toast.error(error.response?.data?.message || "Failed to fetch jobs");
         setMyJobs([]);
       }
     };
     fetchJobs();
-  }, []);
-
-  useEffect(() => {
-    if (!isAuthorized || (user && user.role !== "EMPLOYER")) {
-      navigate("/");
-    }
   }, [isAuthorized, user, navigate]);
 
   const toggleEditMode = (jobId) => {
@@ -50,20 +47,19 @@ const MyJobs = () => {
       toast.success(data.message);
       setEditingJobId(null);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Failed to update job");
     }
   };
 
   const handleDeleteJob = async (jobId) => {
     try {
-      const { data } = await axios.delete(
-        `${BASE_URL}/api/v1/job/delete/${jobId}`,
-        { withCredentials: true }
-      );
+      const { data } = await axios.delete(`${BASE_URL}/api/v1/job/delete/${jobId}`, {
+        withCredentials: true,
+      });
       toast.success(data.message);
       setMyJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Failed to delete job");
     }
   };
 
@@ -81,7 +77,7 @@ const MyJobs = () => {
       <input
         type={type}
         disabled={editingJobId !== jobId}
-        value={value}
+        value={value || ""}
         onChange={(e) => handleInputChange(jobId, field, e.target.value)}
       />
     </div>
@@ -91,7 +87,7 @@ const MyJobs = () => {
     <div>
       <span>{label}:</span>
       <select
-        value={value}
+        value={value || ""}
         onChange={(e) => handleInputChange(jobId, field, e.target.value)}
         disabled={editingJobId !== jobId}
       >
@@ -109,7 +105,7 @@ const MyJobs = () => {
       <span>{label}:</span>
       <textarea
         rows={5}
-        value={value}
+        value={value || ""}
         disabled={editingJobId !== jobId}
         onChange={(e) => handleInputChange(jobId, field, e.target.value)}
       />

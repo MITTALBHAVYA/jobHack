@@ -8,8 +8,8 @@ const Footer = () => {
 
   return (
     <footer className={isAuthorized ? "footerShow" : "footerHide"}>
-      <div>&copy; All Rights Reserved By Bhavya Mittal.</div>
-      <div>
+      <p>&copy; All Rights Reserved By Bhavya Mittal.</p>
+      <nav>
         <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
           <FaYoutube />
         </a>
@@ -19,7 +19,7 @@ const Footer = () => {
         <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
           <RiInstagramFill />
         </a>
-      </div>
+      </nav>
     </footer>
   );
 };

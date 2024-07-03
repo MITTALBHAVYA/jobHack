@@ -12,7 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
-  const { setIsAuthorized } = useContext(Context);
+  const { setIsAuthorized, setUser } = useContext(Context);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -21,9 +21,9 @@ const Login = () => {
       const { data } = await axios.post(
         `${BASE_URL}/api/v1/user/login`,
         {
-          email:email,
-          role:role,
-          password:password,
+          email: email,
+          role: role,
+          password: password,
         },
         {
           headers: {
@@ -37,9 +37,10 @@ const Login = () => {
       setPassword("");
       setRole("");
       setIsAuthorized(true);
+      setUser(data.user);
       navigate("/");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Registration failed");
+      toast.error(error.response?.data?.message || "Login failed");
     }
   };
 
@@ -62,7 +63,7 @@ const Login = () => {
               <FaRegUser />
             </div>
           </div>
-    
+
           <div className="inputTag">
             <label>Email Address</label>
             <div>
@@ -75,7 +76,7 @@ const Login = () => {
               <MdOutlineMailOutline />
             </div>
           </div>
-          
+
           <div className="inputTag">
             <label>Password</label>
             <div>
@@ -88,7 +89,7 @@ const Login = () => {
               <RiLock2Fill />
             </div>
           </div>
-          
+
           <button type="submit" onClick={handleLogin}>
             Login
           </button>

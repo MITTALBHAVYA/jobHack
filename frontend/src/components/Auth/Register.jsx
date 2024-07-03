@@ -9,6 +9,7 @@ import { RiLock2Fill, RiLock2Line } from "react-icons/ri";
 import { FaPencilAlt } from "react-icons/fa";
 import { FaPhoneFlip } from "react-icons/fa6";
 import { BASE_URL } from "../../../helper.js";
+
 const Register = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -16,7 +17,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("user");
-  const { setIsAuthorized } = useContext(Context);
+  const { setIsAuthorized, setUser } = useContext(Context);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -25,12 +26,12 @@ const Register = () => {
       const { data } = await axios.post(
         `${BASE_URL}/api/v1/user/register`,
         {
-          userName:name,
-          phone:phone,
-          email:email,
-          role:role,
-          password:password,
-          confirmPassword:confirmPassword,
+          userName: name,
+          phone: phone,
+          email: email,
+          role: role,
+          password: password,
+          confirmPassword: confirmPassword,
         },
         {
           headers: {
@@ -47,9 +48,9 @@ const Register = () => {
       setConfirmPassword("");
       setRole("");
       setIsAuthorized(true);
+      setUser(data.user);
       navigate("/");
     } catch (error) {
-
       toast.error(error.response?.data?.message || "Registration failed");
     }
   };
