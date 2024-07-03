@@ -54,7 +54,7 @@ const JobDetails = () => {
   } = job;
 
   return (
-    <section className="jobDetails page">
+    <section className="jobDetail page">
       <div className="container">
         <h3>Job Details</h3>
         <div className="banner">
@@ -65,7 +65,7 @@ const JobDetails = () => {
           <p>Description: <span>{description}</span></p>
           <p>Job Posted On: <span>{jobPostedOn}</span></p>
           <p>Salary: {fixedSalary ? <span>{fixedSalary}</span> : <span>{salaryFrom} - {salaryTo}</span>}</p>
-          {user && user.role !== "Employer" && (
+          {user && user.role !== "EMPLOYER" && (
             <Link to={`/application/${_id}`}>Apply Now</Link>
           )}
         </div>

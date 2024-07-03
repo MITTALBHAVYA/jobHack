@@ -17,7 +17,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("user");
-  const { setIsAuthorized, setUser } = useContext(Context);
+  // const { setIsAuthorized, setUser } = useContext(Context);
+  const {setIsAuthorized}=useContext(Context);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -48,7 +49,7 @@ const Register = () => {
       setConfirmPassword("");
       setRole("");
       setIsAuthorized(true);
-      setUser(data.user);
+      // setUser(data.user);
       navigate("/");
     } catch (error) {
       toast.error(error.response?.data?.message || "Registration failed");

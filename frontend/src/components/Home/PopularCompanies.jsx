@@ -35,7 +35,8 @@ const PopularCompanies = () => {
       <div className="container">
         <h3>TOP COMPANIES</h3>
         <div className="banner">
-          {companies.map(({ id, title, location, openPositions, icon }) => (
+          {companies.map(({ id, title, location, openPositions, icon }) =>{ 
+            return (
             <div className="card" key={id}>
               <div className="content">
                 <div className="icon">{icon}</div>
@@ -48,7 +49,7 @@ const PopularCompanies = () => {
                 Open Positions {openPositions}
               </button>
             </div>
-          ))}
+          );})}
         </div>
       </div>
     </div>

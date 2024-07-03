@@ -9,10 +9,11 @@ import { BASE_URL } from "../../../helper.js";
 
 const MyApplications = () => {
   const { user, isAuthorized } = useContext(Context);
+  // const {user} =useContext(Context);
   const [applications, setApplications] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedResumeUrl, setSelectedResumeUrl] = useState("");
-  const navigate = useNavigate();
+  const navigateTo = useNavigate();
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -40,9 +41,9 @@ const MyApplications = () => {
     if (isAuthorized) {
       fetchApplications();
     } else {
-      navigate("/");
+      navigateTo("/");
     }
-  }, [isAuthorized, user, navigate]);
+  }, [isAuthorized, user, navigateTo]);
   
   const deleteApplication = async (id) => {
     try {
@@ -52,7 +53,7 @@ const MyApplications = () => {
 
       toast.success(data.message);
       setApplications((prevApplications) =>
-        prevApplications.filter((app) => app._id !== id)
+        prevApplications.filter((application) => application._id !== id)
       );
     } catch (error) {
       toast.error(error.response.data.message);
@@ -92,8 +93,8 @@ const MyApplications = () => {
 };
 
 const ApplicationCard = ({ application, deleteApplication, openModal, isJobSeeker }) => (
-  <div className="application_card">
-    <div className="details">
+  <div className="job_seeker_card">
+    <div className="detail">
       <p><span>Name:</span> {application.name}</p>
       <p><span>Email:</span> {application.email}</p>
       <p><span>Phone:</span> {application.phone}</p>
@@ -104,7 +105,7 @@ const ApplicationCard = ({ application, deleteApplication, openModal, isJobSeeke
       <img src={application.resume.url} alt="resume" onClick={() => openModal(application.resume.url)} />
     </div>
     {isJobSeeker && (
-      <div className="button_area">
+      <div className="btn_area">
         <button onClick={() => deleteApplication(application._id)}>Delete Application</button>
       </div>
     )}
@@ -116,7 +117,7 @@ ApplicationCard.propTypes = {
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
+    phone: PropTypes.number.isRequired,
     address: PropTypes.string.isRequired,
     coverLetter: PropTypes.string.isRequired,
     resume: PropTypes.shape({

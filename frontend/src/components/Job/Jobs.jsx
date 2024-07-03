@@ -9,11 +9,11 @@ const Jobs = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { isAuthorized } = useContext(Context);
-  const navigateTo = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isAuthorized) {
-      navigateTo("/");
+      navigate("/");
     } else {
       const fetchJobs = async () => {
         try {
@@ -29,7 +29,7 @@ const Jobs = () => {
       };
       fetchJobs();
     }
-  }, [isAuthorized, navigateTo]);
+  }, [isAuthorized, navigate]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -44,7 +44,8 @@ const Jobs = () => {
       <div className="container">
         <h1>ALL AVAILABLE JOBS</h1>
         <div className="banner">
-          {jobs.map(({ _id, title, category, country, location }) => (
+          {jobs.map(({ _id, title, category, country, location }) =>{ 
+            return (
             <div className="card" key={_id}>
               <p>{title}</p>
               <p>{category}</p>
@@ -52,7 +53,7 @@ const Jobs = () => {
               <p>{location}</p>
               <Link to={`/job/${_id}`}>Job Details</Link>
             </div>
-          ))}
+          );})}
         </div>
       </div>
     </section>

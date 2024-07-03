@@ -73,7 +73,6 @@ const Application = () => {
   // Redirect if not authorized or user is an employer
   if (!isAuthorized || (user && user.role === "EMPLOYER")) {
     navigateTo("/");
-    return null;
   }
 
   return (
@@ -96,7 +95,7 @@ const Application = () => {
             required
           />
           <input
-            type="tel"
+            type="number"
             placeholder="Your Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
@@ -116,11 +115,12 @@ const Application = () => {
             required
           />
           <div>
-            <label>Select Resume:</label>
+            <label style={{ textAlign: "start", display: "block", fontSize: "20px" }}>Select Resume:</label>
             <input
               type="file"
               accept=".pdf, .jpeg, .png"
               onChange={handleFileChange}
+              style={{ width: "100%" }}
               required
             />
           </div>

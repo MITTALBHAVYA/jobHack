@@ -4,6 +4,7 @@ import { IoMdSend } from "react-icons/io";
 
 const InfoSection = () => {
   return (
+    <>
     <div className="howitworks">
       <div className="container">
         <h3>How JobZee Works</h3>
@@ -35,6 +36,7 @@ const InfoSection = () => {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

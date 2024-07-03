@@ -45,7 +45,8 @@ const HeroSection = () => {
         </div>
       </div>
       <div className="details">
-        {details.map((element) => (
+        {details.map((element) => {
+          return(
           <div className="card" key={element.id}>
             <div className="icon">{element.icon}</div>
             <div className="content">
@@ -53,7 +54,8 @@ const HeroSection = () => {
               <p>{element.subTitle}</p>
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

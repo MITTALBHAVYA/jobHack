@@ -12,7 +12,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
-  const { setIsAuthorized, setUser } = useContext(Context);
+  // const { setIsAuthorized, setUser } = useContext(Context);
+  const {setIsAuthorized}=useContext(Context);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -37,7 +38,7 @@ const Login = () => {
       setPassword("");
       setRole("");
       setIsAuthorized(true);
-      setUser(data.user);
+      // setUser(data.user);
       navigate("/");
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");

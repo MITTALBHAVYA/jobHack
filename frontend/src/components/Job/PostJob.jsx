@@ -41,17 +41,17 @@ const PostJob = () => {
         }
       );
       toast.success(data.message);
-      setJobData({
-        title: "",
-        description: "",
-        category: "",
-        country: "",
-        location: "",
-        salaryFrom: "",
-        salaryTo: "",
-        fixedSalary: "",
-        salaryType: "default",
-      });
+      // setJobData({
+      //   title: "",
+      //   description: "",
+      //   category: "",
+      //   country: "",
+      //   location: "",
+      //   salaryFrom: "",
+      //   salaryTo: "",
+      //   fixedSalary: "",
+      //   salaryType: "default",
+      // });
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to post job");
     }
@@ -59,7 +59,6 @@ const PostJob = () => {
 
   if (!isAuthorized || (user && user.role !== "EMPLOYER")) {
     navigate("/login");
-    return null;
   }
 
   const handleInputChange = ({ target: { name, value } }) => {

@@ -65,7 +65,8 @@ const PopularCategories = () => {
     <div className="categories">
       <h3>POPULAR CATEGORIES</h3>
       <div className="banner">
-        {categories.map((element) => (
+        {categories.map((element) =>{ 
+          return (
           <div className="card" key={element.id}>
             <div className="icon">{element.icon}</div>
             <div className="text">
@@ -73,7 +74,7 @@ const PopularCategories = () => {
               <p>{element.subTitle}</p>
             </div>
           </div>
-        ))}
+        );})}
       </div>
     </div>
   );

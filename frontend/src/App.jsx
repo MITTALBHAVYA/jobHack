@@ -17,7 +17,7 @@ import Application from './components/Application/Application';
 import MyApplication from './components/Application/MyApplications.jsx';
 import NotFound from './components/NotFound/NotFound';
 import { BASE_URL } from '../helper.js';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 
 function App() {
   const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
@@ -34,10 +34,10 @@ function App() {
         setIsAuthorized(false);
       }
     };
-
-    if (Cookies.get('token')) {
-      fetchUser();
-    }
+    // if (Cookies.get('token')) {
+    //   fetchUser();
+    // }
+    fetchUser();
   }, [setIsAuthorized, setUser]);
 
   return (

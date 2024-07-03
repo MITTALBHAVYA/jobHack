@@ -6,22 +6,22 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { BASE_URL } from '../../../helper.js';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
-  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
-  const navigateTo = useNavigate();
+  const { isAuthorized, setIsAuthorized, user } = useContext(Context);
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/api/v1/user/logout`, { withCredentials: true });
       toast.success(response.data.message);
       setIsAuthorized(false);
-      setUser({});
-      Cookies.remove('isAuthorized');
-      Cookies.remove('user');
-      navigateTo("/login");
+      // setUser({});
+      // Cookies.remove('isAuthorized');
+      // Cookies.remove('user');
+      navigate("/login");
     } catch (error) {
       toast.error(`Something went wrong: ${error.response?.data?.message || error.message}`);
       console.log(error);
@@ -49,7 +49,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link to="/application/me" onClick={() => setShow(false)}>
-                {user && user.role !== "JOB SEEKER" ? "APPLICATIONS" : "MY APPLICATIONS"}
+                {user && user.role !== "JOB SEEKER" ? "APPLICANT'S APPLICATIONS" : "MY APPLICATIONS"}
               </Link>
             </li>
             {user && user.role !== "JOB SEEKER" && (
