@@ -12,19 +12,24 @@ import { errorMiddleware } from "./middlewares/error.js";
 const app = express();
 dotenv.config({ path: './config/config.env' });
 
-app.use(cors());
+// Configure CORS middleware
+app.use(cors({
+    origin: "https://main--jobhack108.netlify.app",
+    methods: ['GET', 'POST', 'DELETE', 'PUT'],
+    credentials: true // Enable credentials (cookies, authorization headers)
+}));
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload({
     useTempFiles: true,
     tempFileDir: '/tmp/',
-})
-);
+}));
 
-app.use("/api/v1/user",userRouter);
-app.use("/api/v1/application",applicationRouter);
-app.use("/api/v1/job",jobRouter);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/application", applicationRouter);
+app.use("/api/v1/job", jobRouter);
 
 dbConnection();
 
