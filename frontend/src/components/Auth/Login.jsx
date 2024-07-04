@@ -5,15 +5,14 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md";
-import { RiLock2Fill} from "react-icons/ri";
+import { RiLock2Fill } from "react-icons/ri";
 import { BASE_URL } from "../../../helper.js";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user");
-  // const { setIsAuthorized, setUser } = useContext(Context);
-  const {setIsAuthorized}=useContext(Context);
+  const [role, setRole] = useState("");
+  const { setIsAuthorized } = useContext(Context);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -22,9 +21,9 @@ const Login = () => {
       const { data } = await axios.post(
         `${BASE_URL}/api/v1/user/login`,
         {
-          email: email,
-          role: role,
-          password: password,
+          email,
+          role,
+          password,
         },
         {
           headers: {
@@ -34,11 +33,12 @@ const Login = () => {
         }
       );
       toast.success(data.message);
-      setEmail("");
-      setPassword("");
-      setRole("");
+
+      // Store user authentication information in local storage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
       setIsAuthorized(true);
-      // setUser(data.user);
       navigate("/");
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
@@ -52,12 +52,19 @@ const Login = () => {
           <img src="/JobZeelogo.png" alt="logo" />
           <h3>Login To Your Account</h3>
         </div>
-        <form>
+        <form onSubmit={handleLogin}>
           <div className="inputTag">
-            <label>Login As</label>
+            <label htmlFor="role">Login As</label>
             <div>
-              <select value={role} onChange={(e) => setRole(e.target.value)}>
-                <option value="">Select Role</option>
+              <select
+                id="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                required
+              >
+                <option value="" disabled>
+                  Select Role
+                </option>
                 <option value="EMPLOYER">Employer</option>
                 <option value="JOB SEEKER">Job Seeker</option>
               </select>
@@ -66,34 +73,36 @@ const Login = () => {
           </div>
 
           <div className="inputTag">
-            <label>Email Address</label>
+            <label htmlFor="email">Email Address</label>
             <div>
               <input
+                id="email"
                 type="email"
                 placeholder="Enter Your Email Here"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
               <MdOutlineMailOutline />
             </div>
           </div>
 
           <div className="inputTag">
-            <label>Password</label>
+            <label htmlFor="password">Password</label>
             <div>
               <input
+                id="password"
                 type="password"
                 placeholder="*********"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
               <RiLock2Fill />
             </div>
           </div>
 
-          <button type="submit" onClick={handleLogin}>
-            Login
-          </button>
+          <button type="submit">Login</button>
           <Link to="/register">Register Now</Link>
         </form>
       </div>

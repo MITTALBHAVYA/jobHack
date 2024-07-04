@@ -10,7 +10,7 @@ import { BASE_URL } from '../../../helper.js';
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
-  const { isAuthorized, setIsAuthorized, user } = useContext(Context);
+  const { isAuthorized, setIsAuthorized, user,setUser } = useContext(Context);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -18,14 +18,12 @@ const Navbar = () => {
       const response = await axios.get(`${BASE_URL}/api/v1/user/logout`, { withCredentials: true });
       toast.success(response.data.message);
       setIsAuthorized(false);
-      // setUser({});
-      // Cookies.remove('isAuthorized');
-      // Cookies.remove('user');
+      setUser({});
+      localStorage.removeItem('user');
       navigate("/login");
     } catch (error) {
       toast.error(`Something went wrong: ${error.response?.data?.message || error.message}`);
       console.log(error);
-      setIsAuthorized(true);
     }
   };
 

@@ -9,12 +9,12 @@ const JobDetails = () => {
   const [job, setJob] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigateTo = useNavigate();
+  const navigate = useNavigate();
   const { isAuthorized, user } = useContext(Context);
 
   useEffect(() => {
     if (!isAuthorized) {
-      navigateTo("/login");
+      navigate("/login");
       return;
     }
 
@@ -24,13 +24,13 @@ const JobDetails = () => {
         setJob(data.job);
       } catch (err) {
         setError(err.response?.data?.message || err.message);
-        navigateTo("/notfound");
+        navigate("/notfound");
       } finally {
         setLoading(false);
       }
     };
     fetchJobDetails();
-  }, [jobId, isAuthorized, navigateTo]);
+  }, [jobId, isAuthorized, navigate]);
 
   if (loading) {
     return <div>Loading...</div>;

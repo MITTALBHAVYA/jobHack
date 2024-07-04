@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +21,12 @@ const PostJob = () => {
   const { isAuthorized, user } = useContext(Context);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!isAuthorized || (user && user.role !== "EMPLOYER")) {
+      navigate("/login");
+    }
+  }, [isAuthorized, user, navigate]);
+
   const handleJobPost = async (e) => {
     e.preventDefault();
     const { salaryType, fixedSalary, salaryFrom, salaryTo, ...rest } = jobData;
@@ -41,25 +47,21 @@ const PostJob = () => {
         }
       );
       toast.success(data.message);
-      // setJobData({
-      //   title: "",
-      //   description: "",
-      //   category: "",
-      //   country: "",
-      //   location: "",
-      //   salaryFrom: "",
-      //   salaryTo: "",
-      //   fixedSalary: "",
-      //   salaryType: "default",
-      // });
+      setJobData({
+        title: "",
+        description: "",
+        category: "",
+        country: "",
+        location: "",
+        salaryFrom: "",
+        salaryTo: "",
+        fixedSalary: "",
+        salaryType: "default",
+      });
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to post job");
     }
   };
-
-  if (!isAuthorized || (user && user.role !== "EMPLOYER")) {
-    navigate("/login");
-  }
 
   const handleInputChange = ({ target: { name, value } }) => {
     setJobData((prevJobData) => ({ ...prevJobData, [name]: value }));

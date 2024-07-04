@@ -16,9 +16,8 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("user");
-  // const { setIsAuthorized, setUser } = useContext(Context);
-  const {setIsAuthorized}=useContext(Context);
+  const [role, setRole] = useState("");
+  const { setIsAuthorized } = useContext(Context);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -28,11 +27,11 @@ const Register = () => {
         `${BASE_URL}/api/v1/user/register`,
         {
           userName: name,
-          phone: phone,
-          email: email,
-          role: role,
-          password: password,
-          confirmPassword: confirmPassword,
+          phone,
+          email,
+          role,
+          password,
+          confirmPassword,
         },
         {
           headers: {
@@ -42,14 +41,12 @@ const Register = () => {
         }
       );
       toast.success(data.message);
-      setName("");
-      setPhone("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-      setRole("");
+
+      // Store user authentication information in local storage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
       setIsAuthorized(true);
-      // setUser(data.user);
       navigate("/");
     } catch (error) {
       toast.error(error.response?.data?.message || "Registration failed");
@@ -63,12 +60,19 @@ const Register = () => {
           <img src="/JobZeelogo.png" alt="logo" />
           <h3>Create a new account</h3>
         </div>
-        <form>
+        <form onSubmit={handleRegister}>
           <div className="inputTag">
-            <label>Register As</label>
+            <label htmlFor="role">Register As</label>
             <div>
-              <select value={role} onChange={(e) => setRole(e.target.value)}>
-                <option value="">Select Role</option>
+              <select
+                id="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                required
+              >
+                <option value="" disabled>
+                  Select Role
+                </option>
                 <option value="EMPLOYER">Employer</option>
                 <option value="JOB SEEKER">Job Seeker</option>
               </select>
@@ -76,68 +80,76 @@ const Register = () => {
             </div>
           </div>
           <div className="inputTag">
-            <label>Name</label>
+            <label htmlFor="name">Name</label>
             <div>
               <input
+                id="name"
                 type="text"
                 placeholder="Enter Your Name Here"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                required
               />
               <FaPencilAlt />
             </div>
           </div>
           <div className="inputTag">
-            <label>Email Address</label>
+            <label htmlFor="email">Email Address</label>
             <div>
               <input
+                id="email"
                 type="email"
                 placeholder="Enter Your Email Here"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
               <MdOutlineMailOutline />
             </div>
           </div>
           <div className="inputTag">
-            <label>Phone Number</label>
+            <label htmlFor="phone">Phone Number</label>
             <div>
               <input
+                id="phone"
                 type="number"
                 placeholder="Enter Your Phone Number Here"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                required
               />
               <FaPhoneFlip />
             </div>
           </div>
           <div className="inputTag">
-            <label>Password</label>
+            <label htmlFor="password">Password</label>
             <div>
               <input
+                id="password"
                 type="password"
                 placeholder="*********"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
               <RiLock2Fill />
             </div>
           </div>
           <div className="inputTag">
-            <label>Confirm Password</label>
+            <label htmlFor="confirmPassword">Confirm Password</label>
             <div>
               <input
+                id="confirmPassword"
                 type="password"
                 placeholder="*********"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                required
               />
               <RiLock2Line />
             </div>
           </div>
-          <button type="submit" onClick={handleRegister}>
-            Register
-          </button>
+          <button type="submit">Register</button>
           <Link to="/login">Login Now</Link>
         </form>
       </div>

@@ -14,7 +14,7 @@ const MyJobs = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthorized || (user && user.role !== "EMPLOYER")) {
+    if (!isAuthorized || (user?.role !== "EMPLOYER")) {
       navigate("/");
       return;
     }

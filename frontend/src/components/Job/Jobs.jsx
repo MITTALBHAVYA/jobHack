@@ -13,7 +13,7 @@ const Jobs = () => {
 
   useEffect(() => {
     if (!isAuthorized) {
-      navigate("/");
+      navigate("/login");
     } else {
       const fetchJobs = async () => {
         try {

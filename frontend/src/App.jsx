@@ -17,7 +17,6 @@ import Application from './components/Application/Application';
 import MyApplication from './components/Application/MyApplications.jsx';
 import NotFound from './components/NotFound/NotFound';
 import { BASE_URL } from '../helper.js';
-// import Cookies from 'js-cookie';
 
 function App() {
   const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
@@ -27,17 +26,23 @@ function App() {
       try {
         const response = await axios.get(`${BASE_URL}/api/v1/user/getUser`, { withCredentials: true });
         console.log('User data fetched from API:', response.data.user);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
         setUser(response.data.user);
         setIsAuthorized(true);
       } catch (error) {
         console.error('Error fetching user data:', error);
+        localStorage.removeItem('user');
         setIsAuthorized(false);
       }
     };
-    // if (Cookies.get('token')) {
-    //   fetchUser();
-    // }
-    fetchUser();
+    const storedUser = localStorage.getItem('user');
+    if(storedUser){
+      setUser(JSON.parse(storedUser));
+      setIsAuthorized(true);
+    }
+    else{
+      fetchUser();
+    }
   }, [setIsAuthorized, setUser]);
 
   return (
