@@ -27,6 +27,8 @@ const Navbar = () => {
     }
   };
 
+  console.log(isAuthorized)
+
   return (
     <>
       <nav className={isAuthorized ? "navbarShow" : "navbarHide"}>

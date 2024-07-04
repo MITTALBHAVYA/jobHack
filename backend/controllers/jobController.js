@@ -51,6 +51,7 @@ export const postJob = catchAsyncError(async(req,res,next)=>{
 
 export const getMyJobs= catchAsyncError(async(req,res,next)=>{
     const {role}=req.user;
+    console.log(req.user);
     if(role!=="EMPLOYER"){
         return next(new ErrorHandler("ONLY EMPLOYER CAN ACCESS RESOURCES",400));
     }
