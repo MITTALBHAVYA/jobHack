@@ -6,7 +6,10 @@ export const sendToken = (user,statusCode,res,message)=>{
         ),
         httpOnly:true,
     };
-    res.status(statusCode).cookie("token",token,options).json({
+    res.status(statusCode)
+        .cookie("token",token,options)
+        .header("Authorization",`Bearer ${token}`)
+        .json({
         success:true,
         user,
         message,
