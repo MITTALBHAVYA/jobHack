@@ -33,11 +33,11 @@ const Login = () => {
         }
       );
       toast.success(data.message);
-
-      // Store user authentication information in local storage
+      setEmail("");
+      setPassword("");
+      setRole("");
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-
       setIsAuthorized(true);
       navigate("/");
     } catch (error) {
