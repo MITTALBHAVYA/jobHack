@@ -106,6 +106,7 @@ export const deleteJob = catchAsyncError(async(req,res,next)=>{
 
 export const getJob = catchAsyncError(async(req,res,next)=>{
     const {jobId}=req.params;
+    console.log(jobId);
     try{
         const job = await Job.findById(jobId);
         if(!job){

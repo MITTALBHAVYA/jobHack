@@ -6,7 +6,7 @@ import { BASE_URL } from '../../../helper.js';
 
 const JobDetails = () => {
   const { jobId } = useParams();
-  const [job, setJob] = useState({});
+  const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ const JobDetails = () => {
       try {
         const { data } = await axios.get(`${BASE_URL}/api/v1/job/${jobId}`, { withCredentials: true });
         setJob(data.job);
+
       } catch (err) {
         setError(err.response?.data?.message || err.message);
         navigate("/notfound");
@@ -30,7 +31,7 @@ const JobDetails = () => {
       }
     };
     fetchJobDetails();
-  }, [jobId, isAuthorized, navigate]);
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
