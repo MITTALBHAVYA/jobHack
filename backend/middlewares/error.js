@@ -6,8 +6,8 @@ class ErrorHandler extends Error{
 }
 
 export const errorMiddleware = (err,req,res,next)=>{
-    err.message=err.message||"INTERNAL SERVER ERROR";
-    err.statusCode = err.statusCode || 500;
+    err.message=(err.message||"INTERNAL SERVER ERROR");
+    err.statusCode = (err.statusCode || 500);
     if(err.name==="CaseError"){
         const message = `Resourse not found. Invalid ${err.path}`;
         err = new ErrorHandler(message,400);
