@@ -20,9 +20,11 @@ const JobDetails = () => {
 
     const fetchJobDetails = async () => {
       try {
-        const { data } = await axios.get(`${BASE_URL}/api/v1/job/${jobId}`, { withCredentials: true });
+        const { data } = await axios.get(`${BASE_URL}/api/v1/job/${jobId}`,{
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          }});
         setJob(data.job);
-
       } catch (err) {
         setError(err.response?.data?.message || err.message);
         navigate("/notfound");
