@@ -12,38 +12,44 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const { setIsAuthorized, setUser,setToken} = useContext(Context);
+  const { setIsAuthorized, setUser, setToken, token } = useContext(Context);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await axios.post(
-        `${BASE_URL}/api/v1/user/login`,
-        {
-          email,
-          role,
-          password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
+    if (!token) {
+      e.preventDefault();
+      try {
+        const { data } = await axios.post(
+          `${BASE_URL}/api/v1/user/login`,
+          {
+            email,
+            role,
+            password,
           },
-          withCredentials: true,
-        }
-      );
-      toast.success(data.message);
-      setEmail("");
-      setPassword("");
-      setRole("");
-      setToken(data.token);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setUser(data.user);
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        toast.success(data.message);
+        setEmail("");
+        setPassword("");
+        setRole("");
+        setToken(data.token);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setUser(data.user);
+        setIsAuthorized(true);
+        navigate("/");
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Login failed");
+      }
+    }
+    else {
       setIsAuthorized(true);
       navigate("/");
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Login failed");
     }
   };
 

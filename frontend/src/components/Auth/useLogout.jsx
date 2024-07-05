@@ -7,7 +7,7 @@ import { BASE_URL } from '../../../helper.js';
 
 const useLogout = () => {
   
-  const { setIsAuthorized, setUser } = useContext(Context);
+  const { setIsAuthorized, setUser ,token} = useContext(Context);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -16,7 +16,7 @@ const useLogout = () => {
         withCredentials: true,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       toast.success(data.message);

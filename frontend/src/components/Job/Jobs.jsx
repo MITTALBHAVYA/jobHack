@@ -9,7 +9,7 @@ const Jobs = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { isAuthorized } = useContext(Context);
+  const { isAuthorized,token } = useContext(Context);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,9 +20,8 @@ const Jobs = () => {
         try {
           const { data } = await axios.get(`${BASE_URL}/api/v1/job/getAll`, {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            withCredentials: true,
+              Authorization: `Bearer ${token}`,
+            }
           });
           setJobs(data.jobs);
         } catch (error) {
@@ -33,7 +32,7 @@ const Jobs = () => {
       };
       fetchJobs();
     }
-  }, [isAuthorized, navigate]);
+  }, [isAuthorized, navigate,token]);
 
   if (loading) {
     return <div>Loading...</div>;

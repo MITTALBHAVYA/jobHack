@@ -18,7 +18,7 @@ const PostJob = () => {
     salaryType: "default",
   });
 
-  const { isAuthorized } = useContext(Context);
+  const { isAuthorized ,token} = useContext(Context);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const PostJob = () => {
         postData,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,

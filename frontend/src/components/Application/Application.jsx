@@ -12,7 +12,7 @@ const Application = () => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [resume, setResume] = useState(null);
-  const { isAuthorized, user } = useContext(Context);
+  const { isAuthorized, user ,token} = useContext(Context);
   const navigateTo = useNavigate();
   const { id } = useParams();
 
@@ -58,10 +58,11 @@ const Application = () => {
 
     try {
       const { data } = await axios.post(`${BASE_URL}/api/v1/application/post`, formData, {
-        withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
+        withCredentials: true,
       });
       toast.success(data.message);
       // Reset form fields after successful submission

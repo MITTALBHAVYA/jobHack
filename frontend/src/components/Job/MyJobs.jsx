@@ -11,7 +11,7 @@ const MyJobs = () => {
 
   const [myJobs, setMyJobs] = useState([]);
   const [editingJobId, setEditingJobId] = useState(null);
-  const { isAuthorized } = useContext(Context);
+  const { isAuthorized ,token} = useContext(Context);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const MyJobs = () => {
       try {
         const { data } = await axios.get(`${BASE_URL}/api/v1/job/getMyJobs`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           }
         });
         setMyJobs(data.myJobs);
@@ -34,7 +34,7 @@ const MyJobs = () => {
       }
     };
     fetchJobs();
-  }, [isAuthorized, navigate]);
+  }, [isAuthorized, navigate,token]);
 
   const toggleEditMode = (jobId) => {
     setEditingJobId((editingJobId === jobId) ? null : jobId);
@@ -48,7 +48,7 @@ const MyJobs = () => {
         updatedJob,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           }
         }
       );
@@ -63,7 +63,7 @@ const MyJobs = () => {
     try {
       const { data } = await axios.delete(`${BASE_URL}/api/v1/job/delete/${jobId}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         }
       });
       toast.success(data.message);

@@ -42,7 +42,9 @@ const MyApplications = () => {
   const deleteApplication = async (id) => {
     try {
       const { data } = await axios.delete(`${BASE_URL}/api/v1/application/delete/${id}`, {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
 
       toast.success(data.message);
