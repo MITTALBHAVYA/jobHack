@@ -56,8 +56,8 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={isAuthorized?<Navigate to="/" />:<Login />} />
+          <Route path="/register" element={isAuthorized?<Navigate to="/" />:<Register />} />
           <Route path="/" element={isAuthorized ? <Home /> : <Navigate to="/login" />} />
           <Route path="/job/getAll" element={isAuthorized ? <Jobs /> : <Navigate to="/login" />} />
           <Route path="/job/:jobId" element={isAuthorized ? <JobDetails /> : <Navigate to="/login" />} />
