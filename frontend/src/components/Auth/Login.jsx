@@ -12,7 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const { setIsAuthorized } = useContext(Context);
+  const { setIsAuthorized, setUser,setToken} = useContext(Context);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -36,8 +36,10 @@ const Login = () => {
       setEmail("");
       setPassword("");
       setRole("");
+      setToken(data.token);
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
+      setUser(data.user);
       setIsAuthorized(true);
       navigate("/");
     } catch (error) {

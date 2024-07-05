@@ -10,20 +10,25 @@ const JobDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { isAuthorized, user } = useContext(Context);
+  const { isAuthorized } = useContext(Context);
 
   useEffect(() => {
-    if (!isAuthorized) {
-      navigate("/login");
-      return;
-    }
-
     const fetchJobDetails = async () => {
       try {
-        const { data } = await axios.get(`${BASE_URL}/api/v1/job/${jobId}`,{
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          }});
+        let config = {
+          headers: {}
+        };
+
+        // Check if there's a token in localStorage
+        const token = localStorage.getItem("token");
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        } else {
+          // Fallback to withCredentials for cookie-based auth
+          config.withCredentials = true;
+        }
+
+        const { data } = await axios.get(`${BASE_URL}/api/v1/job/${jobId}`, config);
         setJob(data.job);
       } catch (err) {
         setError(err.response?.data?.message || err.message);
@@ -32,8 +37,13 @@ const JobDetails = () => {
         setLoading(false);
       }
     };
-    fetchJobDetails();
-  }, []);
+
+    if (!isAuthorized) {
+      navigate("/login");
+    } else {
+      fetchJobDetails();
+    }
+  }, [isAuthorized, jobId, navigate]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -41,6 +51,10 @@ const JobDetails = () => {
 
   if (error) {
     return <div>{error}</div>;
+  }
+
+  if (!job) {
+    return <div>Job not found</div>;
   }
 
   const {
@@ -68,9 +82,7 @@ const JobDetails = () => {
           <p>Description: <span>{description}</span></p>
           <p>Job Posted On: <span>{jobPostedOn}</span></p>
           <p>Salary: {fixedSalary ? <span>{fixedSalary}</span> : <span>{salaryFrom} - {salaryTo}</span>}</p>
-          {user && user.role !== "EMPLOYER" && (
-            <Link to={`/application/${_id}`}>Apply Now</Link>
-          )}
+          <Link to={`/application/${_id}`}>Apply Now</Link>
         </div>
       </div>
     </section>

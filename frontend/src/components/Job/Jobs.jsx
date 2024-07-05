@@ -5,6 +5,7 @@ import { Context } from "../../main";
 import { BASE_URL } from "../../../helper.js";
 
 const Jobs = () => {
+
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,6 +19,9 @@ const Jobs = () => {
       const fetchJobs = async () => {
         try {
           const { data } = await axios.get(`${BASE_URL}/api/v1/job/getAll`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
             withCredentials: true,
           });
           setJobs(data.jobs);
@@ -40,24 +44,26 @@ const Jobs = () => {
   }
 
   return (
-    <section className="jobs page">
-      <div className="container">
-        <h1>ALL AVAILABLE JOBS</h1>
-        <div className="banner">
-          {jobs.map(({ _id, title, category, country, location }) =>{ 
-            return (
-            <div className="card" key={_id}>
-              <p>{title}</p>
-              <p>{category}</p>
-              <p>{country}</p>
-              <p>{location}</p>
-              <p>{_id}</p>
-              <Link to={`/job/${_id}`}>Job Details</Link>
-            </div>
-          );})}
+    <>
+      <section className="jobs page">
+        <div className="container">
+          <h1>ALL AVAILABLE JOBS</h1>
+          <div className="banner">
+            {jobs.map(({ _id, title, category, country, location }) => {
+              return (
+                <div className="card" key={_id}>
+                  <p>{title}</p>
+                  <p>{category}</p>
+                  <p>{country}</p>
+                  <p>{location}</p>
+                  <Link to={`/job/${_id}`}>Job Details</Link>
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../main";
@@ -15,6 +15,13 @@ const Application = () => {
   const { isAuthorized, user } = useContext(Context);
   const navigateTo = useNavigate();
   const { id } = useParams();
+
+  useEffect(() => {
+    // Redirect if not authorized or user is an employer
+    if (!isAuthorized || (user && user.role === "EMPLOYER")) {
+      navigateTo("/");
+    }
+  }, [isAuthorized, user, navigateTo]);
 
   // Function to handle file input changes
   const handleFileChange = (event) => {
@@ -69,11 +76,6 @@ const Application = () => {
       toast.error(error.response.data.message);
     }
   };
-
-  // Redirect if not authorized or user is an employer
-  if (!isAuthorized || (user && user.role === "EMPLOYER")) {
-    navigateTo("/");
-  }
 
   return (
     <section className="application">

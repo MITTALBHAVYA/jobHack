@@ -13,7 +13,7 @@ router
 .get('/getMyJobs',isAuthorized,getMyJobs);
 
 router
-.put('/update/:jobId',updateJob);
+.put('/update/:jobId',isAuthorized,updateJob);
 
 router
 .delete('/delete/:jobId',isAuthorized,deleteJob);

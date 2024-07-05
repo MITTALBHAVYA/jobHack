@@ -17,7 +17,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
-  const { setIsAuthorized } = useContext(Context);
+  const { setIsAuthorized,setUser } = useContext(Context);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -37,7 +37,7 @@ const Register = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true,
+          withCredentials: true, // Ensure this if you need to send cookies
         }
       );
       toast.success(data.message);
@@ -45,7 +45,7 @@ const Register = () => {
       // Store user authentication information in local storage
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-
+      setUser(data.user);
       setIsAuthorized(true);
       navigate("/");
     } catch (error) {

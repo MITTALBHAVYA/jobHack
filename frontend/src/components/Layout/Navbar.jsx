@@ -1,79 +1,57 @@
 import { useState, useContext } from 'react';
-import { Context } from '../../main';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import toast from 'react-hot-toast';
-import axios from 'axios';
-import { BASE_URL } from '../../../helper.js';
-// import Cookies from 'js-cookie';
+import useLogout from '../Auth/useLogout';
+import { Context } from '../../main';
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
-  const { isAuthorized, setIsAuthorized, user,setUser } = useContext(Context);
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/api/v1/user/logout`, { withCredentials: true });
-      toast.success(response.data.message);
-      setIsAuthorized(false);
-      setUser({});
-      localStorage.removeItem('user');
-      navigate("/login");
-    } catch (error) {
-      toast.error(`Something went wrong: ${error.response?.data?.message || error.message}`);
-      console.log(error);
-    }
-  };
-
-  console.log(isAuthorized)
+  const { isAuthorized, user } = useContext(Context);
+  const handleLogout = useLogout();
 
   return (
-    <>
-      <nav className={isAuthorized ? "navbarShow" : "navbarHide"}>
-        <div className="container">
-          <div className="logo">
-            <img src="/JobZee-logos__white.png" alt="logo" />
-          </div>
-          <ul className={`menu ${show ? "show-menu" : ""}`}>
-            <li>
-              <Link to="/" onClick={() => setShow(false)}>
-                HOME
-              </Link>
-            </li>
-            <li>
-              <Link to="/job/getAll" onClick={() => setShow(false)}>
-                ALL JOBS
-              </Link>
-            </li>
-            <li>
-              <Link to="/application/me" onClick={() => setShow(false)}>
-                {user && user.role !== "JOB SEEKER" ? "APPLICANT'S APPLICATIONS" : "MY APPLICATIONS"}
-              </Link>
-            </li>
-            {user && user.role !== "JOB SEEKER" && (
-              <>
-                <li>
-                  <Link to="/job/post" onClick={() => setShow(false)}>
-                    POST NEW JOB
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/job/me" onClick={() => setShow(false)}>
-                    VIEW YOUR JOBS
-                  </Link>
-                </li>
-              </>
-            )}
-            <button onClick={handleLogout}>LOGOUT</button>
-          </ul>
-          <div className="hamburger">
-            <GiHamburgerMenu onClick={() => setShow(!show)} />
-          </div>
+    <nav className={isAuthorized ? 'navbarShow' : 'navbarHide'}>
+      <div className="container">
+        <div className="logo">
+          <img src="/JobZee-logos__white.png" alt="logo" />
         </div>
-      </nav>
-    </>
+        <ul className={`menu ${show ? 'show-menu' : ''}`}>
+          <li>
+            <Link to="/" onClick={() => setShow(false)}>
+              HOME
+            </Link>
+          </li>
+          <li>
+            <Link to="/job/getAll" onClick={() => setShow(false)}>
+              ALL JOBS
+            </Link>
+          </li>
+          <li>
+            <Link to="/application/me" onClick={() => setShow(false)}>
+              {user?.role === 'EMPLOYER' ? "APPLICANT'S APPLICATIONS" : 'MY APPLICATIONS'}
+            </Link>
+          </li>
+          {user?.role === 'EMPLOYER' && (
+            <>
+              <li>
+                <Link to="/job/post" onClick={() => setShow(false)}>
+                  POST NEW JOB
+                </Link>
+              </li>
+              <li>
+                <Link to="/job/me" onClick={() => setShow(false)}>
+                  VIEW YOUR JOBS
+                </Link>
+              </li>
+            </>
+          )}
+          <button onClick={handleLogout}>LOGOUT</button>
+        </ul>
+        <div className="hamburger">
+          <GiHamburgerMenu onClick={() => setShow(!show)} />
+        </div>
+      </div>
+    </nav>
   );
 };
 

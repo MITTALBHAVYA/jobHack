@@ -24,25 +24,30 @@ function App() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/api/v1/user/getUser`, { withCredentials: true });
-        console.log('User data fetched from API:', response.data.user);
+        const response = await axios.get(`${BASE_URL}/api/v1/user/getUser`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
         localStorage.setItem('user', JSON.stringify(response.data.user));
-        console.log(response)
         setUser(response.data.user);
         setIsAuthorized(true);
       } catch (error) {
-        console.error('Error fetching user data:', error);
         localStorage.removeItem('user');
         setIsAuthorized(false);
       }
     };
+
     const storedUser = localStorage.getItem('user');
-    if(storedUser){
+    const token = localStorage.getItem('token');
+
+    if (storedUser && token) {
       setUser(JSON.parse(storedUser));
       setIsAuthorized(true);
-    }
-    else{
+    } else if (token) {
       fetchUser();
+    } else {
+      setIsAuthorized(false);
     }
   }, [setIsAuthorized, setUser]);
 

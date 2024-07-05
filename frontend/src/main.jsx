@@ -5,10 +5,11 @@ export const Context = createContext({});
 
 const AppWrapper = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+  const [token,setToken] =useState(localStorage.getItem('token') || null);
 
   return (
-    <Context.Provider value={{ isAuthorized, setIsAuthorized, user, setUser }}>
+    <Context.Provider value={{ isAuthorized, setIsAuthorized, user, setUser ,token,setToken}}>
       <App />
     </Context.Provider>
   );

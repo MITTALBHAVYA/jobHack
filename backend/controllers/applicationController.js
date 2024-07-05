@@ -61,7 +61,7 @@ export const postApplication = catchAsyncError(async(req,res,next)=>{
         return next(new ErrorHandler("PLEASE UPLOAD A RESUME IN JPEG , PNG  OR WEBP FORMAT",400));
     }
     const cloudinaryResponse = await cloudinary.uploader.upload(resume.tempFilePath);
-    console.log(cloudinaryResponse);
+    // console.log(cloudinaryResponse);
     if(!cloudinaryResponse || cloudinaryResponse.error){
         console.log("CloudinaryError : " ,cloudinaryResponse.error||"Unknown cloudinary error" );
         return next(new ErrorHandler("ERROR UPLOADING RESUME",500));

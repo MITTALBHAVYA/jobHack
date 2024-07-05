@@ -8,32 +8,26 @@ import ResumeModal from "./ResumeModal.jsx";
 import { BASE_URL } from "../../../helper.js";
 
 const MyApplications = () => {
-  const { user, isAuthorized } = useContext(Context);
-  // const {user} =useContext(Context);
+  const { user, isAuthorized,token } = useContext(Context);
   const [applications, setApplications] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedResumeUrl, setSelectedResumeUrl] = useState("");
-  const navigateTo = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const endpoint = user.role === "EMPLOYER"
-          ? "employer/getAll"
-          : "jobseeker/getAll";
+        const endpoint = user && user.role === "EMPLOYER" ? "employer/getAll" : "jobseeker/getAll";
         
         const { data } = await axios.get(`${BASE_URL}/api/v1/application/${endpoint}`, {
-          withCredentials: true,
-        }
-      );
-      const formattedApplications = data.applications.map(app => ({
-        ...app,
-        phone: app.phone.toString(), // Ensure phone is a string
-      }));
-      setApplications(formattedApplications);
-        
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+
         setApplications(data.applications);
       } catch (error) {
+        
         toast.error(error.response.data.message);
       }
     };
@@ -41,10 +35,10 @@ const MyApplications = () => {
     if (isAuthorized) {
       fetchApplications();
     } else {
-      navigateTo("/");
+      navigate("/");
     }
-  }, [isAuthorized, user, navigateTo]);
-  
+  }, [isAuthorized, user, navigate,token]);
+
   const deleteApplication = async (id) => {
     try {
       const { data } = await axios.delete(`${BASE_URL}/api/v1/application/delete/${id}`, {
@@ -72,7 +66,7 @@ const MyApplications = () => {
   return (
     <section className="my_applications page">
       <div className="container">
-        <h1>{user.role === "JOB SEEKER" ? "My Applications" : "Applications From JOB SEEKERs"}</h1>
+        <h1>{user?.role === "JOB SEEKER" ? "My Applications" : "Applications From JOB SEEKERs"}</h1>
         {applications.length === 0 ? (
           <h4>No Applications Found</h4>
         ) : (
@@ -82,7 +76,7 @@ const MyApplications = () => {
               application={application}
               deleteApplication={deleteApplication}
               openModal={openModal}
-              isJobSeeker={user.role === "JOB SEEKER"}
+              isJobSeeker={user?.role === "JOB SEEKER"}
             />
           ))
         )}
