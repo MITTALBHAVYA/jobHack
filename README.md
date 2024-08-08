@@ -215,6 +215,8 @@ The following environment variables need to be set in your `.env` file:
 ![alt text](image-1.png)
 <br/>
 ![alt text](image-2.png)
+<br/>
+![alt text](image-3.png)
 
 ### Render (Backend)
 

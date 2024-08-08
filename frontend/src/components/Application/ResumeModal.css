@@ -1,0 +1,45 @@
+.resume-modal {
+  width: 100%;
+  display: flex;
+  background: rgba(0, 0, 0, 0.6); /* Darkened overlay */
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.resume-modal .modal-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.resume-modal .modal-content .close {
+  position: absolute;
+  right: 36px;
+  top: 35px;
+  font-size: 50px;
+  color: #2d5649; /* Dark olive close button */
+  transition: color 0.3s ease;
+}
+
+.resume-modal .modal-content .close:hover {
+  cursor: pointer;
+  color: #184235; /* Darker olive on hover */
+}
+
+.resume-modal .modal-content img {
+  max-width: 550px;
+  height: auto;
+  border: 2px solid #a6a798; /* Soft brown border for the image */
+}
+
+@media (max-width: 1130px) {
+  .resume-modal {
+    z-index: 11;
+  }
+}

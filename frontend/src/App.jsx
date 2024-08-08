@@ -16,6 +16,10 @@ import PostJob from './components/Job/PostJob.jsx';
 import Application from './components/Application/Application';
 import MyApplication from './components/Application/MyApplications.jsx';
 import NotFound from './components/NotFound/NotFound';
+import UpdateProfile from './components/Layout/UpdateProfile.jsx';
+import UpdatePassword from './components/Layout/UpdatePassword.jsx';
+// import Dashboard from "./pages/Dashboard";//not found
+
 import { BASE_URL } from '../helper.js';
 
 function App() {
@@ -56,8 +60,8 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/login" element={isAuthorized?<Navigate to="/" />:<Login />} />
-          <Route path="/register" element={isAuthorized?<Navigate to="/" />:<Register />} />
+          <Route path="/login" element={isAuthorized ? <Navigate to="/" /> : <Login />} />
+          <Route path="/register" element={isAuthorized ? <Navigate to="/" /> : <Register />} />
           <Route path="/" element={isAuthorized ? <Home /> : <Navigate to="/login" />} />
           <Route path="/job/getAll" element={isAuthorized ? <Jobs /> : <Navigate to="/login" />} />
           <Route path="/job/:jobId" element={isAuthorized ? <JobDetails /> : <Navigate to="/login" />} />
@@ -65,10 +69,22 @@ function App() {
           <Route path="/job/me" element={isAuthorized ? <MyJobs /> : <Navigate to="/login" />} />
           <Route path="/application/:id" element={isAuthorized ? <Application /> : <Navigate to="/login" />} />
           <Route path="/application/me" element={isAuthorized ? <MyApplication /> : <Navigate to="/login" />} />
+          <Route path="/update/profile" element={isAuthorized ? <UpdateProfile /> : <Navigate to="/login" />} />
+          <Route path="/update/password" element={isAuthorized ? <UpdatePassword /> : <Navigate to="/login" />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
-        <Toaster />
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+          toastOptions={{
+            style: {
+              background: '#333',
+              color: '#fff',
+            },
+          }}
+        />
       </BrowserRouter>
     </>
   );

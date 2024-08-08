@@ -1,6 +1,6 @@
 import { FaMicrosoft, FaApple } from "react-icons/fa";
 import { SiTesla } from "react-icons/si";
-
+import "./PopularCompanies.css";
 const PopularCompanies = () => {
   const companies = [
     {

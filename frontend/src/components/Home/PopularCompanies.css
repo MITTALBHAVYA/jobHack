@@ -1,0 +1,104 @@
+.companies {
+    background: var(--cream);/* Light cream background */
+    padding: 50px 0;
+  }
+  
+  .companies .container {
+    min-width: 1500px;
+    max-width: 1500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+  }
+  
+  .companies .container .banner {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 0;
+  }
+  
+  .companies .container .banner .card {
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    background: #fff; /* White background for cards */
+    padding: 20px;
+    border-radius: 10px;
+    gap: 15px;
+    border: 1px solid #b8a489; /* Olive border */
+  }
+  
+  .companies .container .banner .card:hover {
+    transition: all 0.3s;
+    box-shadow: 2px 10px 10px -1px rgba(0, 0, 0, 0.2);
+  }
+  
+  .companies .container .banner .card .content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .companies .container .banner .card .content .icon {
+    padding: 10px;
+    font-size: 24px;
+    color: #2d5649; /* Olive color for icons */
+    background: #e7f3e4; /* Light green background for icons */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .companies .container .banner .card .content .text p:first-child {
+    font-weight: bold;
+    color: #2d5649; /* Olive color for company title */
+    margin-bottom: 5px;
+  }
+  
+  .companies .container .banner .card .content .text p:last-child {
+    font-size: 15px;
+    color: #7b6c55; /* Soft brown color for location text */
+  }
+  
+  .companies .container .banner .card button {
+    color: #fff; /* White text color */
+    background: #2d5649; /* Olive color for button background */
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .companies .container .banner .card button:hover {
+    background: #1e3d2e; /* Darker olive for button on hover */
+  }
+  
+  @media (max-width: 1520px) {
+    .companies .container {
+      min-width: 100%;
+      padding: 0 20px;
+    }
+  }
+  
+  @media (max-width: 1100px) {
+    .companies .container .banner {
+      flex-direction: column;
+      gap: 30px;
+      align-items: center;
+    }
+    .companies .container .banner .card {
+      width: 420px;
+    }
+  }
+  
+  @media (max-width: 470px) {
+    .companies .container .banner .card {
+      width: 100%;
+    }
+  }
+  

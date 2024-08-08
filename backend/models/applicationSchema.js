@@ -2,61 +2,80 @@ import mongoose from "mongoose";
 import validator from "validator";
 
 const applicationSchema = new mongoose.Schema({
-    name: {
-        type : String,
-        required:[true,"PLEASE ENTER THE NAME"],
-        minLength:[3,"NAME MUST CONTAIN ATLEAST 3 CHARACTERS"],
-        maxLength:[30,"NAME MUST CONTAIN ATMOST 30 CHARACTERS"],
-    },
-    email: {
-        type : String,
-        required:[true,"PLEASE ENTER THE EMAIL"],
-        validate:[validator.isEmail,"PLEASE ENTER A VALID EMAIL"],
-    },
-    coverLetter: {
-        type:String,
-        required:[true,"PLEASE ENTER THE COVER LETTER"],
-    },
-    phone:{
-        type: Number,
-        required:[true,"PLEASE ENTER THE PHONE NUMBER"],
-    },
-    address:{
-        type:String,
-        required:[true,"PLEASE ENTER THE ADDRESS"],
-    },
-    resume:{
-        public_id: {
-            type: String,
+    jobSeekerInfo: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
             required: true,
         },
-        url: {
+        name: {
             type: String,
-            required: true,
+            required: [true, "PLEASE ENTER THE NAME"],
+            minLength: [3, "NAME MUST CONTAIN ATLEAST 3 CHARACTERS"],
+            maxLength: [30, "NAME MUST CONTAIN ATMOST 30 CHARACTERS"],
         },
-    },
-    applicantId:{
-        user:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"User",
-            required:true
+        email: {
+            type: String,
+            required: [true, "PLEASE ENTER THE EMAIL"],
+            validate: [validator.isEmail, "PLEASE ENTER A VALID EMAIL"],
         },
-        role:{
-            type:String,
-            enum:["JOB SEEKER"],
-            required:true
+        phone: {
+            type: Number,
+            required: [true, "PLEASE ENTER THE PHONE NUMBER"],
+        },
+        address: {
+            type: String,
+            required: [true, "PLEASE ENTER THE ADDRESS"],
+        },
+        resume: {
+            public_id: {
+                type: String,
+                required: true,
+            },
+            url: {
+                type: String,
+                required: true,
+            },
+        },
+        coverLetter: {
+            type: String,
+            required: [true, "PLEASE ENTER THE COVER LETTER"],
+        },
+        role: {
+            type: String,
+            enum: ["JOB SEEKER"],
+            required: true
         }
     },
-    employerId:{
-        user:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"User",
-            required:true
+    employerInfo: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
         },
-        role:{
-            type:String,
-            enum:["EMPLOYER"],
-            required:true
+        role: {
+            type: String,
+            enum: ["EMPLOYER"],
+            required: true
+        },
+    },
+    jobInfo: {
+        jobId: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+        },
+        jobTitle: {
+            type: String,
+            required: true,
+        },
+    },
+    deletedBy: {
+        jobSeeker: {
+            type: Boolean,
+            default: false,
+        },
+        employer: {
+            type: Boolean,
+            default: false,
         },
     },
 });

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-
+import "./ResumeModal.css"
 const ResumeModal = ({ imageUrl, onClose }) => {
   return (
     <div className="resume-modal">

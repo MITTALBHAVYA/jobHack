@@ -1,0 +1,150 @@
+/* Main section styling */
+.jobs {
+    background: var(--light-cream); /* Light gray background */
+    min-height: 100vh;
+    padding: 50px 20px;
+}
+
+/* Container styling */
+.jobs .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px; /* Adjust max-width for better responsiveness */
+    margin: 0 auto;
+    gap: 35px;
+    color: var(--green);
+}
+
+/* Banner section styling */
+.jobs .container .banner {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 30px;
+    justify-content: space-around;
+    padding: 30px 0;
+}
+
+/* Card styling */
+.jobs .container .banner .card {
+    background: #fff; /* White background */
+    width: 320px;
+    height: 220px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Olive-brown shadow */
+}
+
+/* Card hover effect */
+.jobs .container .banner .card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+/* Card text styling */
+.jobs .container .banner .card p:first-child {
+    font-weight: bold;
+    font-size: 1.6rem;
+    color: #3a3a2a; /* Olive-brown text */
+}
+
+.jobs .container .banner .card p:nth-child(2) {
+    font-size: 1.3rem;
+    color: gray;
+}
+
+.jobs .container .banner .card p:last-child {
+    font-size: 1rem;
+    color: gray;
+}
+
+/* Link styling inside card */
+.jobs .container .banner .card .job-link {
+    text-decoration: none;
+    padding: 7px;
+    font-size: 18px; /* Slightly smaller font size */
+    color: #2d5649; /* Green color */
+    background: rgb(233, 249, 255);
+    width: 100%;
+    display: block;
+    text-align: center;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+/* Link hover effect */
+.jobs .container .banner .card .job-link:hover {
+    background-color: #c0e4e3; /* Light green on hover */
+}
+
+/* Job filter form styling */
+.job-filter-form {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff; /* White background for the form */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+/* Filter form input fields */
+.job-filter-form input[type="text"],
+.job-filter-form label,
+.job-filter-form button {
+    flex: 1 1 30%;
+    min-width: 200px;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #d1d0c5; /* Light olive-brown border */
+    border-radius: 4px;
+    font-size: 16px; /* Adjusted font size */
+}
+
+/* Label styling inside the filter form */
+.job-filter-form label {
+    display: flex;
+    align-items: center;
+    color: #3a3a2a; /* Olive-brown text color */
+}
+
+/* Checkbox styling */
+.job-filter-form input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Filter button styling */
+.job-filter-form button {
+    background-color: #5a5a4f; /* Olive-brown button */
+    color: white;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+    font-size: 18px; /* Adjusted font size */
+}
+
+/* Filter button hover effect */
+.job-filter-form button:hover {
+    background-color: #3a3a2a; /* Darker olive-brown on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .jobs .container {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 800px) {
+    .jobs .container .banner .card {
+        width: 100%;
+        height: auto;
+    }
+}

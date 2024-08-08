@@ -5,7 +5,7 @@ import { User } from "../models/userSchema.js";
 export const isAuthorized = catchAsyncError(async(req,res,next)=>{
     // console.log("check auth...")
     // console.log(req.cookies.token," ",req.headers.authorization)
-    const token =
+    const token = 
     req.cookies.token ||
     (req.headers.authorization && req.headers.authorization.split(" ")[1]);
     // console.log(token || "No token");
@@ -15,5 +15,6 @@ export const isAuthorized = catchAsyncError(async(req,res,next)=>{
     const decoded = jwt.verify(token,process.env.JWT_SECRET_KEY);
 
     req.user = await User.findById(decoded.id);
+    // console.log(req.user);
     next();
 });

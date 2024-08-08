@@ -1,0 +1,175 @@
+/* Base Colors */
+:root {
+    --olive: #4a3c31;
+    --green: #2d5649;
+    --cream: #f5f5dc;
+    --light-cream: #f9f9f9;
+    --dark-green: #1e3d2d;
+    --light-green: #6e8b74;
+}
+
+/* Auth Page */
+.authPage {
+    display: flex;
+    min-width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--cream); /* Cream background for the entire page */
+}
+
+/* Container */
+.authPage .container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--cream); /* White background for the container */
+    padding: 20px 40px;
+    border-radius: 10px; /* Rounded corners for a softer look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Header */
+.authPage .container .header {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.authPage .container .header h3 {
+    font-size: 1.6rem;
+    color: var(--olive); /* Olive-brown color for text */
+}
+
+.authPage .container .header img {
+    width: 150px;
+    height: auto;
+    margin: 0 auto;
+}
+
+/* Form */
+.authPage .container form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Input Tags */
+.authPage .container form .inputTag {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.authPage .container form .inputTag div {
+    display: flex;
+    align-items: center;
+    border-radius: 7px;
+    background: #e5e5e5; /* Light gray background for input fields */
+    
+}
+
+.authPage .container form .inputTag div input,
+.authPage .container form .inputTag div select {
+    background: #fff; /* White background for input fields */
+    padding: 10px;
+    border: 1px solid #d0cfcf; /* Light border for inputs */
+    width: 100%;
+    height: 100%;
+    border-radius: 7px 0px 0px 7px; /* Rounded corners for inputs */
+}
+
+.authPage .container form .inputTag div input:focus,
+.authPage .container form .inputTag div select:focus {
+    outline: none;
+    border-color: var(--olive); /* Olive-brown border on focus */
+}
+
+/* Input Icons */
+.authPage .container form .inputTag div svg {
+    width: 10%;
+    font-size: 1.5rem;
+    background: var(--olive); /* Olive-brown background for icons */
+    height: 100%;
+    padding: 8px;
+    color: #ffffff; /* White color for icons */
+}
+
+/* Buttons */
+.authPage .container form button {
+    padding: 12px;
+    text-align: center;
+    border: none;
+    margin-top: 25px;
+    font-weight: 700;
+    color: #ffffff;
+    background: var(--green); /* Green background for buttons */
+    font-size: 1.2rem;
+    border-radius: 7px;
+}
+
+/* Links */
+.authPage .container form a {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid var(--green); /* Green border for links */
+    margin-top: 25px;
+    font-weight: 700;
+    color: var(--green); /* Green text color for links */
+    font-size: 1.2rem;
+    text-decoration: none;
+    border-radius: 7px;
+    background: var(--light-cream); /* Light cream background for links */
+}
+
+/* Banner */
+.authPage .banner {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: hidden;
+}
+
+.authPage .banner img {
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+}
+
+/* Responsive Styles */
+@media (max-width: 1520px) {
+    .authPage {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 830px) {
+    .authPage {
+        min-height: 100vh;
+        height: auto;
+    }
+    .authPage .container {
+        flex: none;
+        width: 100%;
+        justify-content: flex-start;
+        padding: 40px 20px;
+    }
+    .authPage .banner {
+        flex: none;
+        display: none;
+    }
+}
+
+.authPage .container form .wrapper {
+    display: flex;
+    gap: 20px;
+}
+
+label{
+    color: #4a3c31;
+    font-weight: 700;
+}

@@ -1,0 +1,92 @@
+/* Container for centering the content */
+.update-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Full viewport height */
+    padding: 20px;
+    background-color: #f7f7f7;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Cream background */
+  }
+  
+  .update-profile-content {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #fff; /* Cream background for content */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .update-profile-content h3 {
+    border-bottom: 2px solid #5a5a4f; /* Olive-brown border */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #3a3a2a; /* Olive-brown text */
+    text-align: center;
+  }
+  
+  .update-profile-content label {
+    display: block;
+    margin-bottom: 10px; /* Increased margin */
+    font-weight: bold;
+    font-size: 18px; /* Larger label font size */
+    color: #3a3a2a; /* Olive-brown text */
+  }
+  
+  .update-profile-content input,
+  .update-profile-content select,
+  .update-profile-content textarea {
+    width: 100%;
+    padding: 12px; /* Increased padding for larger input boxes */
+    border-radius: 4px;
+    border: 1px solid #d1d0c5; /* Light olive-brown border */
+    margin-bottom: 20px; /* Increased margin */
+    font-size: 25px; /* Larger text size */
+    color: #2d5649; /* Green text color */
+  }
+  
+  .update-profile-content button {
+    background-color: #5a5a4f; /* Olive-brown button */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+  }
+  
+  .update-profile-content button:hover {
+    background-color: var(--green); /* Darker olive-brown on hover */
+  }
+  .resumeupdateprofile {
+    font-size: 25px; /* Set font size */
+    color: #3a3a2a; /* Olive color for text */
+    margin-bottom: 15px;
+    display: flex;
+    font-weight: bold;
+   justify-content: space-evenly;
+  }
+  .resumeupdateprofile p{
+    font-size: 25px;
+    align-content: center;
+  }
+  
+  .resumeupdateprofile .view-resume {
+    display: inline-block;
+    font-size: 25px; /* Match font size with parent */
+    color: #2d5649; /* Dark green color */
+    text-decoration: none;
+    padding: 1px 10px;
+    border-radius: 4px;
+    border: 1px solid #2d5649; /* Dark green border */
+    background-color: #f1f3f6; /* Light background */
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .resumeupdateprofile .view-resume:hover {
+    background-color: #d3e6d5; /* Light green background on hover */
+    color: #184235; /* Darker green text on hover */
+  }
+  

@@ -1,58 +1,83 @@
 import mongoose from "mongoose";
+import validator from "validator";
 
 const jobSchema = new mongoose.Schema({
-    title : {
-        type : String,
-        required:[true,"PLEASE ENTER THE JOB TITLE"],
-        minLength:[3,"JOB TITLE MUST CONTAIN ATLEAST 3 CHARACTERS"],
-        maxLength:[30,"JOB TITLE MUST CONTAIN ATMOST 30 CHARACTERS"],
+    title: {
+        type: String,
+        required: true,
     },
-    description : {
-        type:String,
-        required:[true,"PLEASE ENTER THE JOB DESCRIPTION"],
-        minLength:[3,"JOB DESCRIPTION MUST CONTAIN ATLEAST 3 CHARACTERS"],
-        maxLength:[350,"JOB DESCRIPTION MUST CONTAIN ATMOST 350 CHARACTERS"],
+    jobType: {
+        type: String,
+        required: true,
+        enum: ["Full-time", "Part-time", "Other"],
     },
-    category:{
-        type:String,
-        required:[true,"ENTER JOB CATEGORY"],
+    location: {
+        type: String,
+        required: true,
     },
-    country : {
-        type:String,
-        required:[true,"ENTER THE COUNTRY"]
+    companyName: {
+        type: String,
+        required: true,
     },
-    location:{
-        type:String,
-        required:[true,"ENTER THE JOB LOCATION"],
+    introduction: {
+        type: String,
     },
-    fixedSalary:{
-        type:Number,
-        minLength:[4,"SALARY SHOULD MORE THAN 3 digits"],
+    responsibilities: {
+        type: String,
+        required: true,
     },
-    salaryFrom:{
-        type:Number,
-        minLength:[4,"SALARY SHOULD MORE THAN 3 digits"],
+    qualifications: {
+        type: String,
+        required: true,
     },
-    salaryTo:{
-        type:Number,
-        minLength:[4,"SALARY SHOULD MORE THAN 3 digits"],
-        validate:[function(){
-            return this.salaryTo>this.salaryFrom;
-          },"salaryTo should be greater than salaryFrom"]
+    offers: {
+        type: String,
     },
-    expired:{
-        type:Boolean,
-        default:false
+    salary: {
+        type: String,
+        required: true,
     },
-    jobPostedOn:{
-        type:Date,
-        default:Date.now,
+    hiringMultipleCandidates: {
+        type: String,
+        default: "No",
+        enum: ["Yes", "No"],
     },
-    jobPostedBy:{
-        type:mongoose.Schema.ObjectId,
-        ref:"User",
-        required:true
+    personalWebsite: {
+        title: {
+            type: String,
+        },
+        url: {
+            type: String,
+            validate: {
+                validator: function(value) {
+                    // Validate URL using the validator library
+                    return validator.isURL(value);
+                },
+                message: props => `${props.value} is not a valid URL!`
+            }
+        }
+    },
+    jobNiche: {
+        type: String,
+        required: true,
+    },
+    newsLettersSent: {
+        type: Boolean,
+        default: false,
+    },
+    jobPostedOn: {
+        type: Date,
+        default: Date.now,
+    },
+    postedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    expired: {
+        type: Boolean,
+        default: false
     }
 });
 
-export const Job = mongoose.model("Job",jobSchema);
+export const Job = mongoose.model("Job", jobSchema);

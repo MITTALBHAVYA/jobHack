@@ -1,22 +1,22 @@
 import express from "express";
-import { getAllJobs,postJob,getMyJobs,updateJob,deleteJob,getJob} from "../controllers/jobController.js";
+import JobController from "../controllers/jobController.js";
 import { isAuthorized } from "../middlewares/auth.js";
-const router = express.Router();
+class JobRouter{
+    constructor(){
+        this.router = express.Router();
+        this.setRoutes();
+    }
+    setRoutes(){
+        this.router.post('/post',isAuthorized,JobController.postJob);
+        this.router.get('/getAll',JobController.getAllJobs);
+        this.router.get('/getMyJobs',isAuthorized,JobController.getMyJobs);
+        this.router.get("/:jobId",isAuthorized,JobController.getJob);
+        this.router.put('/update/:jobId',isAuthorized,JobController.updateJob);
+        this.router.delete('/delete/:jobId',isAuthorized,JobController.deleteJob);
+    }
+    getRouter(){
+        return this.router;
+    }
+}
 
-router
-.get('/getAll',getAllJobs);
-
-router
-.post('/post',isAuthorized,postJob);
-
-router
-.get('/getMyJobs',isAuthorized,getMyJobs);
-
-router
-.put('/update/:jobId',isAuthorized,updateJob);
-
-router
-.delete('/delete/:jobId',isAuthorized,deleteJob);
-
-router.get("/:jobId",isAuthorized,getJob)
-export default router;
+export default new JobRouter().getRouter();

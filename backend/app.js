@@ -5,36 +5,68 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import userRouter from "./routes/userRouter.js";
 import jobRouter from "./routes/jobRouter.js";
+import statsRouter from "./routes/statsRouter.js";
 import applicationRouter from "./routes/applicationRouter.js";
 import { dbConnection } from "./database/dbConnection.js";
 import { errorMiddleware } from "./middlewares/error.js";
-import { setHeadersMiddleware } from "./middlewares/headers.js";
+import { newsLetterCron } from "./automation/newsLetterCron.js";
 
-const app = express();
-dotenv.config({ path: './config/config.env' });
+class App {
+  constructor() {
+    this.app = express();
+    this.configureEnvironment();
+    this.setMiddlewares();
+    this.setRoutes();
+    this.setDatabase();
+    this.setCronJobs();
+    this.setErrorHandling();
+  }
 
-app.use(cors({
-    origin: ["https://jobhack108.netlify.app", "http://localhost:5173"],
-    methods: ['GET', 'POST', 'DELETE', 'PUT'],
-    credentials: true,
-}));
+  configureEnvironment() {
+    dotenv.config({ path: './config/config.env' });
+  }
 
-app.use(cookieParser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(fileUpload({
-    useTempFiles: true,
-    tempFileDir: '/tmp/',
-}));
+  setMiddlewares() {
+    this.app.use(
+      cors({
+        origin: ["https://jobhack108.netlify.app", "http://localhost:5173"],
+        methods: ['GET', 'POST', 'DELETE', 'PUT'],
+        credentials: true,
+      })
+    );
+    this.app.use(cookieParser());
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(
+      fileUpload({
+        useTempFiles: true,
+        tempFileDir: '/tmp/',
+      })
+    );
+  }
 
-app.use(setHeadersMiddleware);
+  setRoutes() {
+    this.app.use("/api/v1/user", userRouter);
+    this.app.use("/api/v1/application", applicationRouter);
+    this.app.use("/api/v1/job", jobRouter);
+    this.app.use("/api/v1/stats", statsRouter);
+  }
 
-app.use("/api/v1/user", userRouter);
-app.use("/api/v1/application", applicationRouter);
-app.use("/api/v1/job", jobRouter);
+  setDatabase() {
+    dbConnection();
+  }
 
-dbConnection();
+  setCronJobs() {
+    newsLetterCron();
+  }
 
-app.use(errorMiddleware);
+  setErrorHandling() {
+    this.app.use(errorMiddleware);
+  }
 
-export default app;
+  getApp() {
+    return this.app;
+  }
+}
+
+export default new App().getApp();

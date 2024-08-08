@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema({
-    userName : {
+    name : {
         type : String,
         required : [true,"pleaase provide your name"],
         minLength:[3,"NAME MUST CONTAIN ATLEAST 3 CHARACTER"],
@@ -19,10 +19,19 @@ const userSchema = new mongoose.Schema({
         type:Number,
         required:[true,"Please provide your phone number."]
     },
+    address :{
+        type: String,
+        required: true,
+    },
+    niches:{
+        firstNiche:String,
+        secondNiche:String,
+        thirdNiche:String,
+    },
     password:{
         type:String,
         required:[true,"Please provide password"],
-        minLength:[3,"Password MUST CONTAIN ATLEAST 8 CHARACTER"],
+        minLength:[8,"Password MUST CONTAIN ATLEAST 8 CHARACTER"],
         maxLength:[30,"Password MUST NOT EXCEED 32 characters"],
         select : false
     },
@@ -33,6 +42,13 @@ const userSchema = new mongoose.Schema({
         validate : function(){
             return this.confirmPassword==this.password;
         }
+    },
+    resume:{
+        public_id:String,
+        url:String,
+    },
+    coverLetter:{
+        type:String,
     },
     role:{
         type:String,

@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../main";
 import { BASE_URL } from "../../../helper.js";
+import "./Application.css"
 
 const Application = () => {
   const [name, setName] = useState("");
@@ -29,8 +30,8 @@ const Application = () => {
     if (file) {
       // Ensure file type restriction
       const fileType = file.type.split("/")[1];
-      if (fileType !== "pdf" && fileType !== "jpeg" && fileType !== "png") {
-        toast.error("Invalid file format. Please upload a PDF, JPEG, or PNG file.");
+      if (fileType !== "pdf" && fileType !== "jpeg" && fileType !== "png" && fileType !== "jpg") {
+        toast.error("Invalid file format. Please upload a PDF, JPEG, JPG,or PNG file.");
         event.target.value = null;
       } else {
         setResume(file);
@@ -57,7 +58,7 @@ const Application = () => {
     formData.append("jobId", id);
 
     try {
-      const { data } = await axios.post(`${BASE_URL}/api/v1/application/post`, formData, {
+      const { data } = await axios.post(`${BASE_URL}/api/v1/application/post/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -121,7 +122,7 @@ const Application = () => {
             <label style={{ textAlign: "start", display: "block", fontSize: "20px" }}>Select Resume:</label>
             <input
               type="file"
-              accept=".pdf, .jpeg, .png"
+              accept=".pdf, .jpeg, .png,.jpg"
               onChange={handleFileChange}
               style={{ width: "100%" }}
               required

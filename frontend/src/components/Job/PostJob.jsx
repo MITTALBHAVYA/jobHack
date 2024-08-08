@@ -4,21 +4,28 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../main";
 import { BASE_URL } from "../../../helper.js";
+import "./PostJob.css";
 
 const PostJob = () => {
   const [jobData, setJobData] = useState({
     title: "",
-    description: "",
-    category: "",
-    country: "",
+    jobType: "Full-time",
     location: "",
-    salaryFrom: "",
-    salaryTo: "",
-    fixedSalary: "",
-    salaryType: "default",
+    companyName: "",
+    introduction: "",
+    responsibilities: "",
+    qualifications: "",
+    offers: "",
+    salary: "",
+    hiringMultipleCandidates: "No",
+    personalWebsite: {
+      title: "",
+      url: ""
+    },
+    jobNiche: "",
   });
 
-  const { isAuthorized ,token} = useContext(Context);
+  const { isAuthorized, token } = useContext(Context);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,18 +36,10 @@ const PostJob = () => {
 
   const handleJobPost = async (e) => {
     e.preventDefault();
-    const { salaryType, fixedSalary, salaryFrom, salaryTo, ...rest } = jobData;
-    const postData =
-      (salaryType === "Fixed Salary")
-        ? { ...rest, fixedSalary }
-        : salaryType === "Ranged Salary"
-        ? { ...rest, salaryFrom, salaryTo }
-        : { ...rest };
-
     try {
       const { data } = await axios.post(
         `${BASE_URL}/api/v1/job/post`,
-        postData,
+        jobData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,14 +51,20 @@ const PostJob = () => {
       toast.success(data.message);
       setJobData({
         title: "",
-        description: "",
-        category: "",
-        country: "",
+        jobType: "Full-time",
         location: "",
-        salaryFrom: "",
-        salaryTo: "",
-        fixedSalary: "",
-        salaryType: "default",
+        companyName: "",
+        introduction: "",
+        responsibilities: "",
+        qualifications: "",
+        offers: "",
+        salary: "",
+        hiringMultipleCandidates: "No",
+        personalWebsite: {
+          title: "",
+          url: ""
+        },
+        jobNiche: "",
       });
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to post job");
@@ -68,6 +73,16 @@ const PostJob = () => {
 
   const handleInputChange = ({ target: { name, value } }) => {
     setJobData((prevJobData) => ({ ...prevJobData, [name]: value }));
+  };
+
+  const handlePersonalWebsiteChange = ({ target: { name, value } }) => {
+    setJobData((prevJobData) => ({
+      ...prevJobData,
+      personalWebsite: {
+        ...prevJobData.personalWebsite,
+        [name]: value,
+      }
+    }));
   };
 
   return (
@@ -86,98 +101,125 @@ const PostJob = () => {
                 required
               />
               <select
-                name="category"
-                value={jobData.category}
+                name="jobType"
+                value={jobData.jobType}
                 onChange={handleInputChange}
                 required
               >
-                <option value="">Select Category</option>
-                {[
-                  "Graphics & Design",
-                  "Mobile App Development",
-                  "Frontend Web Development",
-                  "MERN Stack Development",
-                  "Account & Finance",
-                  "Artificial Intelligence",
-                  "Video Animation",
-                  "MEAN Stack Development",
-                  "MEVN Stack Development",
-                  "Data Entry Operator",
-                ].map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Other">Other</option>
               </select>
             </div>
             <div className="wrapper">
               <input
                 type="text"
-                name="country"
-                value={jobData.country}
+                name="companyName"
+                value={jobData.companyName}
                 onChange={handleInputChange}
-                placeholder="Country"
+                placeholder="Company Name"
                 required
+              />
+              <input
+                type="text"
+                name="location"
+                value={jobData.location}
+                onChange={handleInputChange}
+                placeholder="Location"
+                required
+              />
+            </div>
+            <textarea
+              name="introduction"
+              value={jobData.introduction}
+              onChange={handleInputChange}
+              placeholder="Introduction"
+            />
+            <textarea
+
+              name="responsibilities"
+              value={jobData.responsibilities}
+              onChange={handleInputChange}
+              placeholder="Responsibilities"
+              required
+            />
+            <textarea
+
+              name="qualifications"
+              value={jobData.qualifications}
+              onChange={handleInputChange}
+              placeholder="Qualifications"
+              required
+            />
+            <textarea
+
+              name="offers"
+              value={jobData.offers}
+              onChange={handleInputChange}
+              placeholder="Offers"
+            />
+            <input
+              type="text"
+              name="salary"
+              value={jobData.salary}
+              onChange={handleInputChange}
+              placeholder="Salary"
+              required
+            />
+            <div className="wrapper">
+              <fieldset style={{ border: 'none', padding: 0, margin: 0 }}>
+                <legend style={{ marginBottom: '10px', fontSize: '1.2rem' }}>Hiring Multiple Candidates:</legend>
+                <div style={{ display: 'flex', gap: '10px', fontSize: '1rem' }}>
+                  <label style={{ display: 'flex', alignItems: 'center' }}>
+                    <input
+                      type="radio"
+                      name="hiringMultipleCandidates"
+                      value="Yes"
+                      checked={jobData.hiringMultipleCandidates === "Yes"}
+                      onChange={handleInputChange}
+                      required
+                      style={{ marginRight: '5px' }}
+                    />
+                    Yes
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center' }}>
+                    <input
+                      type="radio"
+                      name="hiringMultipleCandidates"
+                      value="No"
+                      checked={jobData.hiringMultipleCandidates === "No"}
+                      onChange={handleInputChange}
+                      required
+                      style={{ marginRight: '5px' }}
+                    />
+                    No
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+
+            <div className="wrapper">
+              <input
+                type="text"
+                name="title"
+                value={jobData.personalWebsite.title}
+                onChange={handlePersonalWebsiteChange}
+                placeholder="Personal Website Title"
+              />
+              <input
+                type="text"
+                name="url"
+                value={jobData.personalWebsite.url}
+                onChange={handlePersonalWebsiteChange}
+                placeholder="Personal Website URL"
               />
             </div>
             <input
               type="text"
-              name="location"
-              value={jobData.location}
+              name="jobNiche"
+              value={jobData.jobNiche}
               onChange={handleInputChange}
-              placeholder="Location"
-              required
-            />
-            <div className="salary_wrapper">
-              <select
-                name="salaryType"
-                value={jobData.salaryType}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="default">Select Salary Type</option>
-                <option value="Fixed Salary">Fixed Salary</option>
-                <option value="Ranged Salary">Ranged Salary</option>
-              </select>
-              <div>
-                {(jobData.salaryType === "Fixed Salary") && (
-                  <input
-                    type="number"
-                    name="fixedSalary"
-                    placeholder="Enter Fixed Salary"
-                    value={jobData.fixedSalary}
-                    onChange={handleInputChange}
-                    required
-                  />
-                )}
-                {(jobData.salaryType === "Ranged Salary") && (
-                  <div className="ranged_salary">
-                    <input
-                      type="number"
-                      name="salaryFrom"
-                      placeholder="Salary From"
-                      value={jobData.salaryFrom}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    <input
-                      type="number"
-                      name="salaryTo"
-                      placeholder="Salary To"
-                      value={jobData.salaryTo}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-            <textarea
-              rows="10"
-              name="description"
-              value={jobData.description}
-              onChange={handleInputChange}
-              placeholder="Job Description"
+              placeholder="Job Niche"
               required
             />
             <button type="submit">Create Job</button>

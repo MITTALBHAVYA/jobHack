@@ -1,13 +1,13 @@
 import { FaUserPlus } from "react-icons/fa";
 import { MdFindInPage } from "react-icons/md";
 import { IoMdSend } from "react-icons/io";
-
+import "./InfoSection.css";
 const InfoSection = () => {
   return (
     <>
     <div className="howitworks">
       <div className="container">
-        <h3>How JobZee Works</h3>
+        <h3>HOW JOBHACK WORKS</h3>
         <div className="banner">
           <div className="card">
             <FaUserPlus aria-label="Create Account" />

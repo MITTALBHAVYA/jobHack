@@ -1,10 +1,19 @@
 import express from "express";
-import { empGetAllApplications,jobGetAllApplications,jobDeleteApplication,postApplication } from "../controllers/applicationController.js";
+import ApplicationController from "../controllers/applicationController.js";
 import { isAuthorized } from "../middlewares/auth.js";
-const router = express.Router();
-
-router.post("/post",isAuthorized,postApplication);
-router.get("/employer/getAll",isAuthorized,empGetAllApplications);
-router.get("/jobseeker/getAll",isAuthorized,jobGetAllApplications);
-router.delete("/delete/:id",isAuthorized,jobDeleteApplication);
-export default router;
+class ApplicationRouter{
+    constructor(){
+        this.router = express.Router();
+        this.setRoutes();
+    }
+    setRoutes(){
+        this.router.get("/employer/getAll",isAuthorized,ApplicationController.empGetAllApplications); 
+        this.router.get("/jobseeker/getAll",isAuthorized,ApplicationController.jobGetAllApplications);
+        this.router.post("/post/:id",isAuthorized,ApplicationController.postApplication);
+        this.router.delete("/delete/:id",isAuthorized,ApplicationController.jobDeleteApplication);
+    }
+    getRouter(){
+        return this.router;
+    }
+}
+export default new ApplicationRouter().getRouter();

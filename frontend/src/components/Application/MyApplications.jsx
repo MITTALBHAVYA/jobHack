@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import ResumeModal from "./ResumeModal.jsx";
 import { BASE_URL } from "../../../helper.js";
+import "./MyApplications.css";
 
 const MyApplications = () => {
-  const { user, isAuthorized,token } = useContext(Context);
+  const { user, isAuthorized, token } = useContext(Context);
   const [applications, setApplications] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedResumeUrl, setSelectedResumeUrl] = useState("");
@@ -27,7 +28,6 @@ const MyApplications = () => {
 
         setApplications(data.applications);
       } catch (error) {
-        
         toast.error(error.response.data.message);
       }
     };
@@ -37,7 +37,7 @@ const MyApplications = () => {
     } else {
       navigate("/");
     }
-  }, [isAuthorized, user, navigate,token]);
+  }, [isAuthorized, user, navigate, token]);
 
   const deleteApplication = async (id) => {
     try {
@@ -68,7 +68,7 @@ const MyApplications = () => {
   return (
     <section className="my_applications page">
       <div className="container">
-        <h1>{user?.role === "JOB SEEKER" ? "My Applications" : "Applications From JOB SEEKERs"}</h1>
+        <h1>{user?.role === "JOB SEEKER" ? "My Applications" : "Applications From JOB SEEKER"}</h1>
         {applications.length === 0 ? (
           <h4>No Applications Found</h4>
         ) : (
@@ -91,14 +91,15 @@ const MyApplications = () => {
 const ApplicationCard = ({ application, deleteApplication, openModal, isJobSeeker }) => (
   <div className="job_seeker_card">
     <div className="detail">
-      <p><span>Name:</span> {application.name}</p>
-      <p><span>Email:</span> {application.email}</p>
-      <p><span>Phone:</span> {application.phone}</p>
-      <p><span>Address:</span> {application.address}</p>
-      <p><span>Cover Letter:</span> {application.coverLetter}</p>
+      <p><span>Job Title:</span> {application.jobInfo.jobTitle}</p>
+      <p><span>Name:</span> {application.jobSeekerInfo.name}</p>
+      <p><span>Email:</span> {application.jobSeekerInfo.email}</p>
+      <p><span>Phone:</span> {application.jobSeekerInfo.phone}</p>
+      <p><span>Address:</span> {application.jobSeekerInfo.address}</p>
+      <p><span>Cover Letter:</span> {application.jobSeekerInfo.coverLetter}</p>
     </div>
     <div className="resume">
-      <img src={application.resume.url} alt="resume" onClick={() => openModal(application.resume.url)} />
+      <img src={application.jobSeekerInfo.resume.url} alt="resume" onClick={() => openModal(application.jobSeekerInfo.resume.url)} />
     </div>
     {isJobSeeker && (
       <div className="btn_area">
@@ -111,13 +112,18 @@ const ApplicationCard = ({ application, deleteApplication, openModal, isJobSeeke
 ApplicationCard.propTypes = {
   application: PropTypes.shape({
     _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    phone: PropTypes.number.isRequired,
-    address: PropTypes.string.isRequired,
-    coverLetter: PropTypes.string.isRequired,
-    resume: PropTypes.shape({
-      url: PropTypes.string.isRequired,
+    jobInfo: PropTypes.shape({
+      jobTitle: PropTypes.string.isRequired,
+    }).isRequired,
+    jobSeekerInfo: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      phone: PropTypes.string.isRequired,
+      address: PropTypes.string.isRequired,
+      coverLetter: PropTypes.string.isRequired,
+      resume: PropTypes.shape({
+        url: PropTypes.string.isRequired,
+      }).isRequired,
     }).isRequired,
   }).isRequired,
   deleteApplication: PropTypes.func.isRequired,

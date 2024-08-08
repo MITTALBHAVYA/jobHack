@@ -1,3 +1,4 @@
+import "./PopularCategories.css";
 import {
   MdOutlineDesignServices,
   MdOutlineWebhook,

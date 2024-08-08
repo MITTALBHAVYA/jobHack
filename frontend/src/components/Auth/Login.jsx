@@ -7,6 +7,7 @@ import { FaRegUser } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { RiLock2Fill } from "react-icons/ri";
 import { BASE_URL } from "../../../helper.js";
+import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -57,7 +58,7 @@ const Login = () => {
     <section className="authPage">
       <div className="container">
         <div className="header">
-          <img src="/JobZeelogo.png" alt="logo" />
+          <img src="/JOBHACKlogogreen.svg" alt="logo" />
           <h3>Login To Your Account</h3>
         </div>
         <form onSubmit={handleLogin}>
