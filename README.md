@@ -212,10 +212,13 @@ The following environment variables need to be set in your `.env` file:
 4. Netlify will automatically detect the `netlify.toml` file and deploy your site.
 ![alt text](image.png)
 <br/>
+
 ![alt text](image-1.png)
 <br/>
+
 ![alt text](image-2.png)
 <br/>
+
 ![alt text](image-3.png)
 
 ### Render (Backend)
